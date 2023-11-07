@@ -1,0 +1,23 @@
+.form-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.login-box {
+    background-color: lightgreen;
+}
+
+label:before {
+    content: "\a";
+    white-space: pre;
+}
+
+button {
+    display: block;
+    text-align: center;
+}
+
+.register-box {
+    background-color: #c890ee;
+    margin: 0 10px 0 10px;
+}

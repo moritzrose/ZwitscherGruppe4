@@ -1,0 +1,29 @@
+### Register user
+POST http://localhost:8080/register
+Content-Type:application/json
+
+{
+ "username": "adam",
+ "password1": "12345",
+ "password2": "12345"
+}
+
+### Login user
+POST http://localhost:8080/login
+Content-Type:application/json
+
+{
+"username": "adam",
+"password": "12345"
+}
+
+### Logout user
+POST http://localhost:8080/logout
+Content-Type:application/json
+
+### Get user information
+GET http://localhost:8080/user
+Content-Type:application/json
+
+### Get current rank for user
+GET http://localhost:8080/rank

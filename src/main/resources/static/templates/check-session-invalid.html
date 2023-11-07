@@ -1,0 +1,8 @@
+{# Logs out user (by removing invalid session cookie) and redirect to start page #}
+{% if error %}
+<p hx-trigger="load" hx-post="http://localhost:8080/logout" hx-swap="none"></p>
+{{redirect("index.html")}}
+{% else %}
+{# Stores current user so that other templates can access the data via load('user') #}
+{{save('user')}}
+{% endif %}

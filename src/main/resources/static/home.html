@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/nunjucks@latest"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="templates/javascript-helpers.js"></script>
+</head>
+
+<body>
+<div hx-ext="client-side-templates,response-targets,json-enc"
+      hx-trigger="load"
+      hx-get="http://localhost:8080/user"
+      nunjucks-template="main-template"
+      hx-target-4*="#main"
+      hx-target="#main"
+      id="main">
+</div>
+
+<template id="main-template">
+    {% include "templates/check-session-invalid.html" %}
+    {% include "templates/navbar.html" %}
+
+    <h1>Home - Welcome</h1>
+
+    <p>Welcome, <strong>{{ username }}</strong></p>
+
+    <hr>
+    <!-- This is just an example to get you started (see also RankController in backend). -->
+    <p>🤨 Do you want to know how many user registered before you?</p>
+    <button
+            hx-get="http://localhost:8080/rank"
+            nunjucks-template="rank-result-template"
+            hx-target="#rank-result">👉 Click here</button>
+    <div id="rank-result"></div>
+
+    <hr>
+    <!-- TODO Needs to be implemented. Best is to copy 'home.html' and modify it to your needs. -->
+    <p> Checkout latest blog posts </p>
+    <a href="posts.html"><button>Click here 🌟</button></a>
+</template>
+
+<template id="rank-result-template">
+    Hey, {{load('user').username}}, you are the <strong>{{rank}}th</strong> user on this site.
+</template>
+</body>
+</html>
