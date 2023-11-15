@@ -18,14 +18,13 @@ public class BlogPostService {
     }
 
 
-//    public List<BlogPost> getAllPosts() {
-//
-//        return blogPostRepository.findAll();
-//    }
-//
     public List<BlogPost> getAllPosts() {
 
-        return blogPostRepository.findAll();
+        return blogPostRepository.findAllOrderedByIdDesc();
+    }
+
+    public BlogPost getBlogPostById(Long postId) {
+        return blogPostRepository.findById(postId).orElse(null);
     }
 
     public void addNewPost(BlogPost blogPost){

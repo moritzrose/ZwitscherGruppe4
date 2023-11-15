@@ -1,10 +1,7 @@
 package com.brights.zwitscher.blogposts;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,9 +28,20 @@ public class BlogPostController {
 
     // nur Admin kann post hinzufügen
     @PostMapping("/addnewpost")
-    public void addNewPost(@RequestBody BlogPost blogPost){
+    public void addNewPost(@RequestBody BlogPostDTO blogPostdto){
+
+        BlogPost blogPost = new BlogPost(blogPostdto.getTitle(),blogPostdto.getContent()
+                ,blogPostdto.getImage(),blogPostdto.getUsername());
 
         blogPostService.addNewPost(blogPost);
 
+    }
+
+
+    @GetMapping("/posts/{postId}")
+    public BlogPost showBlogPostById(@PathVariable Long postId) {
+        BlogPost blogPost = blogPostService.getBlogPostById(postId);
+
+        return blogPost;
     }
 }
