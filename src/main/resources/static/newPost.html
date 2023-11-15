@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zwitscher</title>
+    <link rel="stylesheet" href="newPost.css">
+</head>
+<body>
+<header></header>
+<main>
+    <div class="postCreationContainer">
+        <p>Your message</p>
+        <form class="postCreationForm" hx-post="http://localhost:8080/newPost"
+              hx-target-4*="#error-box-login">
+            <textarea required class="postCreationInputText" name="blogContentText" id="blogContent"  placeholder="Let the world know what you are up to..."></textarea>
+            <textarea class="postCreationInputLink" name="imageUrl" id="imageUrl" placeholder="Add a link to your favourite picture..."></textarea>
+            <div class="postCreationButtonContainer">
+                <button class="postCreationButton"  type="submit">Send</button>
+                <a class="postCreationButton" href="home.html">Cancel</a>
+            </div>
+
+            <div id="postCreationFailure"></div>
+        </form>
+    </div>
+</main>
+<footer></footer>
+</body>
+</html>

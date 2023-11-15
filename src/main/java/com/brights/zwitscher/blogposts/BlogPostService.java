@@ -17,19 +17,16 @@ public class BlogPostService {
         this.blogPostRepository = blogPostRepository;
     }
 
-
-//    public List<BlogPost> getAllPosts() {
-//
-//        return blogPostRepository.findAll();
-//    }
-//
     public List<BlogPost> getAllPosts() {
 
         return blogPostRepository.findAll();
     }
 
-    public void addNewPost(BlogPost blogPost){
+    public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO){
+        String blogContentText = newBlogPostRequestDTO.getBlogContentText();
+        String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "Image-Url was not valid!";
 
-        blogPostRepository.save(blogPost);
+
+        return new NewBlogPostResponseDTO();
     }
 }

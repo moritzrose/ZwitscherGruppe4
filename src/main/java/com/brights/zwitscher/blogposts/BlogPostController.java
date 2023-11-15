@@ -31,9 +31,7 @@ public class BlogPostController {
 
     // nur Admin kann post hinzufügen
     @PostMapping("/addnewpost")
-    public void addNewPost(@RequestBody BlogPost blogPost){
-
-        blogPostService.addNewPost(blogPost);
-
+    public NewBlogPostResponseDTO addNewPost(@RequestBody NewBlogPostRequestDTO newBlogPostRequestDTO){
+        return blogPostService.addNewPost(newBlogPostRequestDTO);
     }
 }
