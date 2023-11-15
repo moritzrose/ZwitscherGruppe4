@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @RestController
@@ -43,4 +46,16 @@ public class UserController {
             else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords are not the same!");
         }
     }
+
+    @GetMapping("/users")
+    public UserCollection getAllUsers() {
+        List<User> users = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .collect( Collectors.toList());
+        return new UserCollection ( users );
+    }
+
+
+
+
 }
