@@ -26,7 +26,7 @@ public class SessionControllerAdvice {
     }
 
     @ModelAttribute("sessionUser")
-    public Optional<User> sessionUser(@CookieValue(value = "sessionId", defaultValue = "") String sessionId) {
+    public Optional<User> sessionUser(@CookieValue(name = "sessionId", defaultValue = "") String sessionId) {
         // When you set a username in login.default that user will always be logged in
         if(defaultUsername != null && !defaultUsername.isEmpty()){
             return userRepository.findByUsername(defaultUsername);
