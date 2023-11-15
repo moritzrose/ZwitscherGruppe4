@@ -1,5 +1,8 @@
 package com.brights.zwitscher.user;
 
+import com.brights.zwitscher.blogposts.BlogPost;
+import com.brights.zwitscher.blogposts.BlogPostRepository;
+import com.brights.zwitscher.blogposts.BlogPostService;
 import com.brights.zwitscher.session.RegisterRequestDTO;
 import com.brights.zwitscher.session.RegisterResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,9 +19,12 @@ public class UserController {
 
     private UserRepository userRepository;
 
+    private BlogPostService blogPostserv;
+
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository,BlogPostService blogPostRepository) {
         this.userRepository = userRepository;
+        this.blogPostserv = blogPostRepository;
     }
 
     @GetMapping("/user")
@@ -43,4 +50,8 @@ public class UserController {
             else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords are not the same!");
         }
     }
+
+
+
+
 }
