@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>HTMX</title>
+
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/nunjucks@latest"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="templates/javascript-helpers.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div hx-ext="client-side-templates, response-targets, json-enc"
+     hx-trigger="load"
+     hx-get="http://localhost:8080/new-user"
+     nunjucks-template="main-template"
+     hx-target-4*="#main"
+     hx-target="#main"
+     id="main">
+</div>
+
+<template id="main-template">
+    {% include "templates/check-session-valid.html" %}
+
+    <h2>Registrierung als neuer Benutzer</h2>
+    <div class="form-container">
+        <div class="login-box">
+            <strong>Bitte geben Sie Ihre Daten an</strong> <br>
+            <div style="background-color: #ff1eb0; padding: 5px">
+                <form hx-post="http://localhost:8080/register"
+                      nunjucks-template="register-successful"
+                      hx-target=".form-container"
+                      hx-target-4*="#error-box-login">
+                    <label for="username">neuer Benutzer</label>
+                    <input type="text" id="username" name="username">
+                    <label for="password">neues Passwort</label>
+                    <input type="password" id="password" name="password">
+                    <label for="password2">Passwort wiederholen</label>
+                    <input type="password" id="password2" name="password2">
+                    <button type="submit">einreichen</button>
+                    <div id="error-box-login"></div>
+                </form>
+                <button hx-get="http://localhost:8080/register"
+                        nunjucks-template="login-triggered"
+                >Zurück zu Login</button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- These templates must not be nested in above template because it already would be interpolated as part of the GET user response -->
+<template id="login-template">
+    {% if error %}
+    <h3>⚠️ Error ⚠️</h3>
+    <code>{{ message }}</code>
+    {% else %}
+    <!-- If no error, register view disappears. User can proceed with login -->
+    {% endif %}
+</template>
+
+<template id="register-successful">
+    {% if error %}
+    <div>
+        <h3>⚠️ Error ⚠️</h3>
+        <code>{{ message }}</code>
+    </div>
+    {% else %}
+    <p><strong>{{ username }}</strong>, successfully logged in ✅</p>
+
+    {# Redirect to home after 500ms #}
+    {{redirect("home.html",500)}}
+    {% endif %}
+</template>
+
+<template id="login-triggered">
+    Login 🏃 <strong>Redirecting ...</strong>
+    {{redirect("index.html")}}
+</template>
+
+</body>
+</html>
