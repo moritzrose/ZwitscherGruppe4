@@ -17,6 +17,10 @@ public class BlogPost {
     private String title;
     private String content;
     private String image;
+    private String username;
+
+
+
 
     public BlogPost() {
     }
@@ -28,6 +32,13 @@ public class BlogPost {
     }
 
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getTitle() {
         return title;
