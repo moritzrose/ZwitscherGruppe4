@@ -32,32 +32,34 @@
 
     <h2>Registrierung als neuer Benutzer</h2>
     <div class="form-container">
-        <div class="login-box">
+        <div class="register-box">
             <strong>Bitte geben Sie Ihre Daten an</strong> <br>
             <div style="background-color: #ff1eb0; padding: 5px">
                 <form hx-post="http://localhost:8080/register"
                       nunjucks-template="register-successful"
                       hx-target=".form-container"
-                      hx-target-4*="#error-box-login">
+                      hx-target-4*="#error-box-register">
                     <label for="username">neuer Benutzer</label>
                     <input type="text" id="username" name="username">
-                    <label for="password">neues Passwort</label>
-                    <input type="password" id="password" name="password">
+                    <label for="password1">neues Passwort</label>
+                    <input type="password" id="password1" name="password1">
                     <label for="password2">Passwort wiederholen</label>
                     <input type="password" id="password2" name="password2">
                     <button type="submit">einreichen</button>
-                    <div id="error-box-login"></div>
+                    <div id="error-box-register"></div>
                 </form>
-                <button hx-get="http://localhost:8080/register"
-                        nunjucks-template="login-triggered"
-                >Zurück zu Login</button>
+                <a href="index.html">
+                    <button>
+                        Zurück zu Login
+                    </button>
+                </a>
             </div>
         </div>
     </div>
 </template>
 
 <!-- These templates must not be nested in above template because it already would be interpolated as part of the GET user response -->
-<template id="login-template">
+<template id="register-template">
     {% if error %}
     <h3>⚠️ Error ⚠️</h3>
     <code>{{ message }}</code>
@@ -73,17 +75,11 @@
         <code>{{ message }}</code>
     </div>
     {% else %}
-    <p><strong>{{ username }}</strong>, successfully logged in ✅</p>
+    <p><strong>{{ username }}</strong>, successfully registered ✅</p>
 
-    {# Redirect to home after 500ms #}
-    {{redirect("home.html",500)}}
+    {# Redirect to index after 500ms #}
+    {{redirect("index.html",500)}}
     {% endif %}
 </template>
-
-<template id="login-triggered">
-    Login 🏃 <strong>Redirecting ...</strong>
-    {{redirect("index.html")}}
-</template>
-
 </body>
 </html>
