@@ -35,8 +35,8 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
         return new UserDTO(sessionUser.getUsername(), sessionUser.isAdmin());
     }
-
-    @GetMapping("/getAdmin")
+//
+//    @GetMapping("/getAdmin")
 
     @PostMapping("/register")
     public RegisterResponseDTO createUser(@RequestBody RegisterRequestDTO registerRequestDTO){

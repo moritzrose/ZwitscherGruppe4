@@ -3,7 +3,7 @@ POST http://localhost:8080/register
 Content-Type:application/json
 
 {
- "username": "adam12",
+ "username": "adam1211",
  "password1": "12345",
  "password2": "12345"
 }
@@ -53,7 +53,7 @@ GET http://localhost:8080/allposts
 GET http://localhost:8080/users
 
 ### Get user by id
-GET http://localhost:8080/users/2
+GET http://localhost:8080/users/1
 
 ### Make user admin by id
 POST http://localhost:8080/users/1/newadmin

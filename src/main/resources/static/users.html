@@ -1,107 +1,148 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <!-- For tutorial -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js" defer></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/styles/atom-one-dark.min.css">
-    <link rel="stylesheet" href="./style.css">
-    <title>Memes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/nunjucks@latest"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
-    <script src="../javascript-helpers.js"></script>
+    <script src="templates/javascript-helpers.js"></script>
 </head>
-<body hx-ext="client-side-templates,response-targets,json-enc">
 
-
-//-------------------------------------------------------------------------------------
-
-<h1>Your daily dose of memes ✌️</h1>
-
-<button class="redButton" hx-get="http://localhost:8080/memes-api/random-meme"
-        hx-target=".output2"
-        nunjucks-template="template1"
->MAKE ME LAUGH!
-</button>
-
-<section class="output2"></section>
-//-------------------------------------------------------------------------------------
-
-<form hx-post="http://localhost:8080/memes-api/memes"
-      hx-swap="beforeend"
-      hx-target="#output3"
-      nunjucks-template="addedElement">
-    <label for="title">Provide Title:</label>
-    <input type="text" id="title" name="title">
-    <br>
-    <label for="imageUrl">Provide imageUrl:</label>
-    <input type="text" id="imageUrl" name="imageUrl">
-    <br>
-    <label for="creator">Provide creator:</label>
-    <input type="text" id="creator" name="creator">
-    <br>
-    <label for="upVotes">Provide upVotes:</label>
-    <input type="text" id="upVotes" name="upVotes">
-    <br>
-    <button type="submit">Emit POST request</button>
-</form>
-//-------------------------------------------------------------------------------------
-
-<section class="detailWindow"></section>
-
-<h1>Overview of all memes</h1>
-<div hx-get="http://localhost:8080/memes-api/memes"
-     hx-target="#output3"
-     nunjucks-template="listElement"
-     hx-trigger="load">
+<body>
+<div hx-ext="client-side-templates,response-targets,json-enc"
+     hx-trigger="load"
+     hx-get="http://localhost:8080/user"
+     nunjucks-template="main-template"
+     hx-target-4*="#main"
+     hx-target="#main"
+     id="main">
 </div>
 
-<section id="output3" class="memeOverview"></section>
+<template id="main-template">
+    {% include "templates/check-session-invalid.html" %}
+    {% include "templates/navbar.html" %}
+</template>
+
+    //-------------------------------------------------------------------------------------
+
+<!--<h1>Your daily dose of memes ✌️</h1>-->
+
+<!--<button class="redButton" hx-get="http://localhost:8080/memes-api/random-meme"-->
+<!--        hx-target=".output2"-->
+<!--        nunjucks-template="template1"-->
+<!--&gt;MAKE ME LAUGH!-->
+<!--</button>-->
+
+<!--<section class="output2"></section>-->
+//-------------------------------------------------------------------------------------
+
+<!--<form hx-post="http://localhost:8080/memes-api/memes"-->
+<!--      hx-swap="beforeend"-->
+<!--      hx-target="#output3"-->
+<!--      nunjucks-template="addedElement">-->
+<!--    <label for="title">Provide Title:</label>-->
+<!--    <input type="text" id="title" name="title">-->
+<!--    <br>-->
+<!--    <label for="imageUrl">Provide imageUrl:</label>-->
+<!--    <input type="text" id="imageUrl" name="imageUrl">-->
+<!--    <br>-->
+<!--    <label for="creator">Provide creator:</label>-->
+<!--    <input type="text" id="creator" name="creator">-->
+<!--    <br>-->
+<!--    <label for="upVotes">Provide upVotes:</label>-->
+<!--    <input type="text" id="upVotes" name="upVotes">-->
+<!--    <br>-->
+<!--    <button type="submit">Emit POST request</button>-->
+<!--</form>-->
+//-------------------------------------------------------------------------------------
+
+<!--<section class="detailWindow"></section>-->
+
+<!--<h1>Overview of all memes</h1>-->
+<!--<div hx-get="http://localhost:8080/users"-->
+<!--     hx-target="#output3"-->
+<!--     nunjucks-template="listElement"-->
+<!--     hx-trigger="load">-->
+<!--</div>-->
+
+<!--<section id="output3" class="memeOverview"></section>-->
 
 //-------------------------------------------------------------------------------------
 
-<template id="template1">
-    <div class="memeContainer">
-        <h2>{{title}}</h2>
-        <img src={{imageUrl}}>
-    </div>
-</template>
+<!--<template id="template1">-->
+<!--    <div class="memeContainer">-->
+<!--        <h2>{{title}}</h2>-->
+<!--        <img src={{imageUrl}}>-->
+<!--    </div>-->
+<!--</template>-->
 
-<template id="addedElement">
-    <div class="memeElement">
-        <h3>{{title}}</h3>
-        <button hx-get="http://localhost:8080/memes-api/memes/{{id}}"
-                hx-target=".detailWindow"
-                nunjucks-template="Details">
-            Show Details
-        </button>
-    </div>
-</template>
+<!--<template id="addedElement">-->
+<!--    <div class="memeElement">-->
+<!--        <h3>{{title}}</h3>-->
+<!--        <button hx-get="http://localhost:8080/memes-api/memes/{{id}}"-->
+<!--                hx-target=".detailWindow"-->
+<!--                nunjucks-template="Details">-->
+<!--            Show Details-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</template>-->
 
-<template id="listElement">
-    {% for meme in memeList %}
-    <div class="memeElement">
-        <h3>{{meme.title}}</h3>
-        <button hx-get="http://localhost:8080/memes-api/memes/{{meme.id}}"
-                hx-target=".detailWindow"
-                nunjucks-template="Details"
-        >Show Details
-        </button>
-    </div>
+<!--<template id="listElement">-->
+<!--    {% for user in userList %}-->
+<!--    <p>{{user.getid}}</p>-->
+<!--    <p>{{user.getusername}}</p>-->
+<!--    <p>{{user.getpassword}}</p>-->
+<!--    <hr>-->
+<!--    {% endfor %}-->
+<!--&lt;!&ndash;    <div class="memeElement">&ndash;&gt;-->
+<!--&lt;!&ndash;        <h3>{{user.id}}</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button hx-get="http://localhost:8080/users&ndash;&gt;-->
+<!--&lt;!&ndash;                hx-target=".detailWindow"&ndash;&gt;-->
+<!--&lt;!&ndash;                nunjucks-template="Details"&ndash;&gt;-->
+<!--&lt;!&ndash;        >Show Details&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    {% endfor %}-->
+<!--</template>-->
+
+<!--<template id="Details">-->
+<!--    <h3>Meme-Title: {{title}}</h3>-->
+<!--    <div class="memeContainer">-->
+<!--        <img src={{imageUrl}}>-->
+<!--        <p>Created by: {{creator}} </p>-->
+<!--        <p>Upvotes: {{upVotes}} </p>-->
+<!--    </div>-->
+<!--</template>-->
+<h3>2. Overview of all users</h3>
+<div hx-get="http://localhost:8080/users"
+     hx-target="#output2"
+     nunjucks-template="template2"
+     hx-trigger="load"
+     hx-headers="{'Accept': 'text/html'}"
+>All the users:</div>
+<section id="output2">
+    Here ALL THE USERS will appear...
+</section>
+<template id="template2">
+    {% for asddf in users %}
+    {% for user in usersList %}
+        <p>{{user.id}}</p>
+        <p>{{user.username}}</p>
+        <p>{{user.password}}</p>
+    <hr>
+    {% endfor %}
     {% endfor %}
 </template>
 
-<template id="Details">
-    <h3>Meme-Title: {{title}}</h3>
-    <div class="memeContainer">
-        <img src={{imageUrl}}>
-        <p>Created by: {{creator}} </p>
-        <p>Upvotes: {{upVotes}} </p>
-    </div>
-</template>
+
+<p>Hello</p>
 
 </body>
 </html>
