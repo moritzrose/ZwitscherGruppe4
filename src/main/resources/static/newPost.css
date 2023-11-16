@@ -44,3 +44,17 @@ body {
     color: black;
     cursor: pointer;
 }
+
+.noAccessContainer {
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.postCreated-successful{
+    position: absolute;
+    top:50%;
+    width: 5rem;
+    height: 10rem;
+    background: darkgrey;
+    color: white;
+}
