@@ -15,8 +15,8 @@
     <script src="templates/javascript-helpers.js"></script>
 </head>
 
-<body>
-<div hx-ext="client-side-templates,response-targets,json-enc"
+<body hx-ext="client-side-templates,response-targets,json-enc">
+<div
       hx-trigger="load"
       hx-get="http://localhost:8080/user"
       nunjucks-template="main-template"
@@ -28,7 +28,6 @@
 <template id="main-template">
     {% include "templates/check-session-invalid.html" %}
     {% include "templates/navbar.html" %}
-
 
     <h1>Home - Welcome</h1>
 
@@ -45,6 +44,28 @@
 
     <hr>
     <!-- TODO Needs to be implemented. Best is to copy 'home.html' and modify it to your needs. -->
+    <p> Checkout latest blog posts </p>
+
+
+    <div hx-get="http://localhost:8080/allposts"
+            hx-target="#out3"
+            nunjucks-template = "temp3"
+            hx-trigger="load"
+    > Show all Post</div>
+    <section id="out3"></section>
+    <template id="temp3">
+
+
+        {% for post in blogPostList %}
+        <p>Title: {{post.title}} </p>
+        <p>Content: {{post.content}} </p>
+<!--        <p>Image: {{post.image}} </p>-->
+        {% endfor %}
+
+    </template>
+
+
+
     {% if admin %}
     <a href="newPost.html"><button> Add new Post 🌟</button></a>
     {% endif %}
