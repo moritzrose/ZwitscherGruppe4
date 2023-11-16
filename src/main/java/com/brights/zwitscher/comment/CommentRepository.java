@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
 
-    @Query(value = "SELECT * FROM COMMENT ORDER BY COMMENT.commenTime ASC ", nativeQuery = true)
-    List<Comment> findAllOrderedByIdASC();
 }

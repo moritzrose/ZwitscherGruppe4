@@ -13,9 +13,7 @@ public class CommentService {
     public CommentService(CommentRepository repository) {
         this.repository = repository;
     }
-public List<Comment> getAllComments() {
-    return repository.findAllOrderedByIdASC();
-}
+
 
     public void addNewComment(Comment comment) {
 
