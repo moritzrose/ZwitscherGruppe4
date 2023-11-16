@@ -56,6 +56,27 @@ public class UserController {
     }
 
 
+//    @PostMapping("/users/{id}/toggle-admin")
+//    public User toggleAdmin(@PathVariable Long id) {
+//        List<User> userById = StreamSupport //
+//                .stream(userRepository.findAll().spliterator(), false) //
+//                .filter (user -> user.getId ()== id)
+//                .collect( Collectors.toList());
+//
+//        return userById;
+////        Optional<User> user = userRepository.findById(id);
+////        user.setAdmin(!user.isAdmin());
+//
+//        userRepository.save(user);
+//    }
 
+    @GetMapping("/users/{id}")
+    public Optional<User> getUserById(@PathVariable Long id) {
+        Optional<User> userById = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
 
+        return userById;
+    }
 }

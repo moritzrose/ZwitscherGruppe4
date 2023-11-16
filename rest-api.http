@@ -13,7 +13,7 @@ POST http://localhost:8080/login
 Content-Type:application/json
 
 {
-"username": "adam",
+"username": "adam12",
 "password": "12345"
 }
 
@@ -27,3 +27,6 @@ Content-Type:application/json
 
 ### Get current rank for user
 GET http://localhost:8080/rank
+
+### Get user by id
+GET http://localhost:8080/users/{1}
