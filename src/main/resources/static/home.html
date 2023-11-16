@@ -13,6 +13,43 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
+
+    <style>
+        #data-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .content {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+
+
+    </style>
 </head>
 
 <body>
@@ -45,6 +82,59 @@
     <hr>
     <!-- TODO Needs to be implemented. Best is to copy 'home.html' and modify it to your needs. -->
     <p> Checkout latest blog posts </p>
+
+
+    <div
+            hx-get="http://localhost:8080/allposts"
+            hx-target="#out3"
+            nunjucks-template = "temp3"
+            hx-trigger="load"
+    > Show all Post</div>
+    <section id="out3"></section>
+    <template id="temp3">
+        <p>Posts</p>
+
+    <div id="data-container">
+
+    {% for post in allposts %}
+    <div class="card">
+        {% if post.title %}
+        <p class="title">Title: {{post.title}} </p>
+        {% endif %}
+
+        {% if post.content %}
+        <p class="content">Content: {{post.content}} </p>
+        {% endif %}
+
+    <p>Image: {{post.image}} </p>
+    </div>
+    {% endfor%}
+
+</div>
+
+
+    </template>
+
+<!--    <div-->
+<!--            hx-get="http://localhost:8080/allposts"-->
+<!--            hx-target="#out3"-->
+<!--            nunjucks-template = "temp3"-->
+<!--            hx-trigger="load"-->
+<!--    > Show all Post</div>-->
+<!--    <section id="out3"></section>-->
+<!--    <template id="temp3">-->
+<!--        <p>Posts</p>-->
+
+<!--        {% for post in allposts %}-->
+<!--        <p>Title: {{post.title}} </p>-->
+<!--        <p>Content: {{post.content}} </p>-->
+<!--        <p>Image: {{post.image}} </p>-->
+<!--        {% endfor%}-->
+
+<!--    </template>-->
+
+
+
     <a href="newPost.html"><button> Add new Post 🌟</button></a>
 </template>
 
