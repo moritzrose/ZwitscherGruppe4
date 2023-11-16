@@ -13,7 +13,7 @@ POST http://localhost:8080/login
 Content-Type:application/json
 
 {
-"username": "adam12",
+"username": "admin",
 "password": "12345"
 }
 
@@ -27,6 +27,16 @@ Content-Type:application/json
 
 ### Get current rank for user
 GET http://localhost:8080/rank
+
+### Create BlogPost
+POST http://localhost:8080/addnewpost
+Content-Type:application/json
+
+{
+    "blogContentText": "Hallo, mein Text!",
+    "imageUrl": "",
+    "username": "Moritz"
+}
 
 ### Get all users
 GET http://localhost:8080/users

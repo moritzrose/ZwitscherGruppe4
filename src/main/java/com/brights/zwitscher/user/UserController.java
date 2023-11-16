@@ -1,5 +1,8 @@
 package com.brights.zwitscher.user;
 
+import com.brights.zwitscher.blogposts.BlogPost;
+import com.brights.zwitscher.blogposts.BlogPostRepository;
+import com.brights.zwitscher.blogposts.BlogPostService;
 import com.brights.zwitscher.session.RegisterRequestDTO;
 import com.brights.zwitscher.session.RegisterResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,12 @@ public class UserController {
 
     private UserRepository userRepository;
 
+    private BlogPostService blogPostserv;
+
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository,BlogPostService blogPostRepository) {
         this.userRepository = userRepository;
+        this.blogPostserv = blogPostRepository;
     }
 
     @GetMapping("/user")
