@@ -1,12 +1,13 @@
 package com.brights.zwitscher.blogposts;
 
+import com.brights.zwitscher.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BlogPostController {
@@ -31,9 +32,10 @@ public class BlogPostController {
 
     // nur Admin kann post hinzufügen
     @PostMapping("/addnewpost")
-    public void addNewPost(@RequestBody BlogPost blogPost){
-
-        blogPostService.addNewPost(blogPost);
-
+    public NewBlogPostResponseDTO addNewPost(@RequestBody NewBlogPostRequestDTO newBlogPostRequestDTO, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
+        User sessionUser = sessionUserOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
+        if(sessionUser.isAdmin()) return blogPostService.addNewPost(newBlogPostRequestDTO, sessionUser);
+        else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 }

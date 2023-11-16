@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @RestController
@@ -51,7 +53,35 @@ public class UserController {
         }
     }
 
+    @GetMapping("/users")
+    public UserCollection getAllUsers() {
+        List<User> users = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .collect( Collectors.toList());
+        return new UserCollection ( users );
+    }
 
+    @GetMapping("/users/{id}")
+    public Optional<User> getUserById(@PathVariable Long id) {
+        Optional<User> userById = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
 
+        return userById;
+    }
 
+    @PostMapping("/users/{id}/newadmin")
+    public Optional<User> makeAdmin(@PathVariable Long id) {
+        Optional<User> newAdmin = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
+
+        newAdmin.get().setAdmin (true);
+        userRepository.save(newAdmin.get());
+        return newAdmin;
+    }
+
+    
 }
