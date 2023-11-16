@@ -4,25 +4,47 @@
     <meta charset="UTF-8">
     <title>Zwitscher</title>
     <link rel="stylesheet" href="newPost.css">
+
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/nunjucks@latest"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="templates/javascript-helpers.js"></script>
 </head>
 <body>
-<header></header>
-<main>
-    <div class="postCreationContainer">
-        <p>Your message</p>
-        <form class="postCreationForm" hx-post="http://localhost:8080/newPost"
-              hx-target-4*="#error-box-login">
-            <textarea required class="postCreationInputText" name="blogContentText" id="blogContent"  placeholder="Let the world know what you are up to..."></textarea>
-            <textarea class="postCreationInputLink" name="imageUrl" id="imageUrl" placeholder="Add a link to your favourite picture..."></textarea>
-            <div class="postCreationButtonContainer">
-                <button class="postCreationButton"  type="submit">Send</button>
-                <a class="postCreationButton" href="home.html">Cancel</a>
-            </div>
 
-            <div id="postCreationFailure"></div>
-        </form>
-    </div>
-</main>
-<footer></footer>
+<div hx-ext="client-side-templates,response-targets,json-enc"
+     hx-trigger="load"
+     hx-get="http://localhost:8080/user"
+     nunjucks-template="postCreation"
+     hx-target-4*="#main"
+     hx-target="#main"
+     id="main">
+</div>
+
+<template id="postCreation">
+    {% include "templates/check-session-invalid.html" %}
+
+    <header></header>
+    <main>
+        <div class="postCreationContainer">
+            <form class="postCreationForm" hx-post="http://localhost:8080/addnewpost"
+                  hx-target-4*="#error-box-login">
+                <textarea required class="textInputField postCreationInputTitle" name="blogTitle" id="blogTitle"
+                          placeholder="Type in your title..."></textarea>
+                <textarea required class="textInputField postCreationInputText" name="blogContentText" id="blogContent"
+                          placeholder="Let the world know what you are up to..."></textarea>
+                <textarea class="textInputField postCreationInputLink" name="imageUrl" id="imageUrl"
+                          placeholder="Add a link to your favourite picture..."></textarea>
+                <div class="postCreationButtonContainer">
+                    <button class="postCreationButton" type="submit">Send</button>
+                    <a class="postCreationButton" href="home.html">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer></footer>
+</template>
 </body>
 </html>

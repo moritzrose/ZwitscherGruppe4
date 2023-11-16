@@ -1,10 +1,8 @@
 package com.brights.zwitscher.blogposts;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.brights.zwitscher.user.User;
+import jakarta.persistence.*;
 
 @Entity
 public class BlogPost {
@@ -17,30 +15,24 @@ public class BlogPost {
     private String title;
     private String content;
     private String image;
-    private String username;
 
-
-
+    @ManyToOne
+    private User user;
 
     public BlogPost() {
     }
 
-
-    public BlogPost(String title, String content, String image, String username) {
+    public BlogPost(String title, String content, String image, User user) {
         this.title = title;
         this.content = content;
         this.image = image;
-        this.username = username;
+        this.user = user;
     }
 
 
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public User getUsername() {
+        return user;
     }
 
     public String getTitle() {

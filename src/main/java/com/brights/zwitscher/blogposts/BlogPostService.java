@@ -1,6 +1,7 @@
 package com.brights.zwitscher.blogposts;
 
 
+import com.brights.zwitscher.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,14 @@ public class BlogPostService {
         return blogPostRepository.findAll();
     }
 
-    public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO){
+    public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser){
+        String title = newBlogPostRequestDTO.getTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
         String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "Image-Url was not valid!";
 
 
-        return new NewBlogPostResponseDTO();
+        blogPostRepository.save(new BlogPost(title, blogContentText, imageUrl, sessionUser));
+
+        return new NewBlogPostResponseDTO(title, blogContentText, imageUrl, sessionUser.getUsername());
     }
 }

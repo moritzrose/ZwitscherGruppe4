@@ -12,7 +12,4 @@ import java.util.Stack;
 @Repository
 public interface BlogPostRepository extends JpaRepository<BlogPost,Long> {
 
-
-
-
 }

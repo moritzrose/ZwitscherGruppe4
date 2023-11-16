@@ -2,13 +2,16 @@ package com.brights.zwitscher.blogposts;
 
 public class NewBlogPostResponseDTO {
 
-    String username;
-    String postContentText;
-    String imageUrl;
+    private String title;
+    private String postContentText;
+    private String imageUrl;
+    private String username;
 
-    public NewBlogPostResponseDTO(String username, String message) {
+    public NewBlogPostResponseDTO(String title, String postContentText, String imageUrl, String username) {
+        this.title = title;
+        this.postContentText = postContentText;
+        this.imageUrl = imageUrl;
         this.username = username;
-        this.postContentText = message;
     }
 
     public String getUsername() {

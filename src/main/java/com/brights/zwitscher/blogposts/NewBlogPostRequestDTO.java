@@ -1,9 +1,12 @@
 package com.brights.zwitscher.blogposts;
 
+import com.brights.zwitscher.user.User;
+
 public class NewBlogPostRequestDTO {
+
+    private String title;
     private String blogContentText;
     private String imageUrl;
-    private String username;
 
 
     public String getBlogContentText() {
@@ -14,7 +17,8 @@ public class NewBlogPostRequestDTO {
         return imageUrl;
     }
 
-    public String getUsername() {
-        return username;
+
+    public String getTitle() {
+        return title;
     }
 }
