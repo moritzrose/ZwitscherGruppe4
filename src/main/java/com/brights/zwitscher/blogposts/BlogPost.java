@@ -1,8 +1,12 @@
 package com.brights.zwitscher.blogposts;
 
 
+import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class BlogPost {
@@ -19,7 +23,31 @@ public class BlogPost {
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
+    @OrderBy("commentTime")
+    private List<Comment> comments  = new ArrayList<>(); //wird automatisch mit allen
+
     public BlogPost() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public BlogPost(String title, String content, String image, User user) {

@@ -1,9 +1,14 @@
 package com.brights.zwitscher.blogposts;
 
 
+import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -37,5 +42,21 @@ public class BlogPostService {
         blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));
 
         return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
+    }
+
+    public Comment updateBlogPostWithComment(Long blogId, Comment comment) {
+        // Check if post with provided id exists
+        BlogPost blogPostById = getBlogPostById(blogId);
+
+        if (blogPostById == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id " + blogId + " not found");
+        }
+        // Comment wants to know about the entry it belongs to
+        comment.setBlogPost(blogPostById);
+        // Blog post wants to know about the comment
+        blogPostById.getComments().add(comment);
+        this.blogPostRepository.save(blogPostById);
+
+        return comment;
     }
 }
