@@ -28,17 +28,17 @@
     {%if not admin%}
     <div class="noAccessContainer">
         <h1>No Access!</h1>
-        <p>You must an admin to create a new post!</p>
+        <p>You are not an admin!</p>
         <a class="postCreationButton" href="home.html">Go back</a>
     </div>
 
     {% else %}
+    {% include "templates/navbar.html" %}
 
-    <header></header>
-    <main>
         <div class="postCreationContainer">
-            <form class="postCreationForm" hx-post="http://localhost:8080/addnewpost"
-                  hx-target-4*="#error-box-login">
+            <form class="postCreationForm"
+                  hx-post="http://localhost:8080/addnewpost"
+                  nunjucks-template="postCreated-successful">
                 <textarea required class="textInputField postCreationInputTitle" name="blogTitle" id="blogTitle"
                           placeholder="Type in your title..."></textarea>
                 <textarea required class="textInputField postCreationInputText" name="blogContentText" id="blogContent"
@@ -47,12 +47,17 @@
                           placeholder="Add a link to your favourite picture..."></textarea>
                 <div class="postCreationButtonContainer">
                     <button class="postCreationButton" type="submit" href="home.html">Send</button>
-                    <a class="postCreationButton" href="home.html">Cancel</a>
+                    <a class="postCreationButton" href="home.html">Back</a>
                 </div>
             </form>
         </div>
-    </main>
-    <footer></footer>
+    {% endif %}
+</template>
+
+<template id="postCreated-successful">
+    {% if not error %}
+    <h1>Post successfully created!</h1>
+    {{redirect("home.html",2000)}}
     {% endif %}
 </template>
 </body>
