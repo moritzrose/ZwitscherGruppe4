@@ -63,6 +63,7 @@ public class UserController {
         return new UserCollection ( users );
     }
 
+
     @GetMapping("/users/{id}")
     public Optional<User> getUserById(@PathVariable Long id) {
         Optional<User> userById = StreamSupport //
