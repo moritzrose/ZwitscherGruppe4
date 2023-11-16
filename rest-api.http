@@ -56,4 +56,4 @@ GET http://localhost:8080/users
 GET http://localhost:8080/users/1
 
 ### Make user admin by id
-POST http://localhost:8080/users/1/newadmin
+POST http://localhost:8080/users/3/newadmin

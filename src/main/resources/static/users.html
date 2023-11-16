@@ -15,9 +15,8 @@
     <script src="templates/javascript-helpers.js"></script>
 </head>
 
-<body>
-<div hx-ext="client-side-templates,response-targets,json-enc"
-     hx-trigger="load"
+<body hx-ext="client-side-templates,response-targets,json-enc">
+<div hx-trigger="load"
      hx-get="http://localhost:8080/user"
      nunjucks-template="main-template"
      hx-target-4*="#main"
@@ -125,24 +124,22 @@
      hx-target="#output2"
      nunjucks-template="template2"
      hx-trigger="load"
-     hx-headers="{'Accept': 'text/html'}"
 >All the users:</div>
 <section id="output2">
     Here ALL THE USERS will appear...
 </section>
 <template id="template2">
-    {% for asddf in users %}
-    {% for user in usersList %}
-        <p>{{user.id}}</p>
-        <p>{{user.username}}</p>
-        <p>{{user.password}}</p>
+
+    {% for each in userList %}
+        <p>{{each.id}}</p>
+        <p>{{each.username}}</p>
+    <p>Admin:
+        {{ "true" if (user.isadmin) else "falsee" }}
+    </p>
     <hr>
     {% endfor %}
-    {% endfor %}
+
 </template>
-
-
-<p>Hello</p>
 
 </body>
 </html>
