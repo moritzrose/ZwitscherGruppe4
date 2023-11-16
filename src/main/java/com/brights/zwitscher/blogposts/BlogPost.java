@@ -25,7 +25,7 @@ public class BlogPost {
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
     @OrderBy("commentTime")
-    private List<Comment> comments  = new ArrayList<>();
+    private List<Comment> comments  = new ArrayList<>(); //wird automatisch mit allen
 
     public BlogPost() {
     }
