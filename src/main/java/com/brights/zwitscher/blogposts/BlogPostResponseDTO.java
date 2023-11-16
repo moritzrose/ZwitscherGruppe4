@@ -1,7 +1,7 @@
 package com.brights.zwitscher.blogposts;
 
 
-public class BlogPostDTO {
+public class BlogPostResponseDTO {
 
 
 
@@ -11,11 +11,11 @@ public class BlogPostDTO {
 
     private String username;
 
-    public BlogPostDTO() {
+    public BlogPostResponseDTO() {
     }
 
 
-    public BlogPostDTO(String title, String content, String image, String username) {
+    public BlogPostResponseDTO(String title, String content, String image, String username) {
         this.title = title;
         this.content = content;
         this.image = image;
