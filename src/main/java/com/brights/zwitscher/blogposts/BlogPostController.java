@@ -25,10 +25,7 @@ public class BlogPostController {
     public List<BlogPost> getAllPosts(){
 
         return blogPostService.getAllPosts();
-
     }
-
-
 
     // nur Admin kann post hinzufügen
     @PostMapping("/addnewpost")

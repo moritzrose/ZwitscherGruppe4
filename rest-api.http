@@ -33,7 +33,7 @@ POST http://localhost:8080/addnewpost
 Content-Type:application/json
 
 {
+    "blogTitle" : "Test",
     "blogContentText": "Hallo, mein Text!",
-    "imageUrl": "",
-    "username": "Moritz"
+    "imageUrl": "asd"
 }

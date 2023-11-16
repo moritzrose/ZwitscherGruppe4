@@ -2,31 +2,31 @@ package com.brights.zwitscher.blogposts;
 
 public class NewBlogPostResponseDTO {
 
-    private String title;
-    private String postContentText;
+    private String blogTitle;
+    private String blogContentText;
     private String imageUrl;
     private String username;
 
-    public NewBlogPostResponseDTO(String title, String postContentText, String imageUrl, String username) {
-        this.title = title;
-        this.postContentText = postContentText;
+    public NewBlogPostResponseDTO(String blogTitle, String blogContentText, String imageUrl, String username) {
+        this.blogTitle = blogTitle;
+        this.blogContentText = blogContentText;
         this.imageUrl = imageUrl;
         this.username = username;
     }
 
+    public String getBlogTitle() {
+        return blogTitle;
+    }
+
+    public String getBlogContentText() {
+        return blogContentText;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getMessage() {
-        return postContentText;
-    }
-
-    public void setMessage(String message) {
-        this.postContentText = message;
     }
 }

@@ -25,6 +25,14 @@
 
 <template id="postCreation">
     {% include "templates/check-session-invalid.html" %}
+    {%if not admin%}
+    <div class="noAccessContainer">
+        <h1>No Access!</h1>
+        <p>You must an admin to create a new post!</p>
+        <a class="postCreationButton" href="home.html">Go back</a>
+    </div>
+
+    {% else %}
 
     <header></header>
     <main>
@@ -38,13 +46,14 @@
                 <textarea class="textInputField postCreationInputLink" name="imageUrl" id="imageUrl"
                           placeholder="Add a link to your favourite picture..."></textarea>
                 <div class="postCreationButtonContainer">
-                    <button class="postCreationButton" type="submit">Send</button>
+                    <button class="postCreationButton" type="submit" href="home.html">Send</button>
                     <a class="postCreationButton" href="home.html">Cancel</a>
                 </div>
             </form>
         </div>
     </main>
     <footer></footer>
+    {% endif %}
 </template>
 </body>
 </html>

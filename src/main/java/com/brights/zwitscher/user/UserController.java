@@ -34,6 +34,8 @@ public class UserController {
         return new UserDTO(sessionUser.getUsername(), sessionUser.isAdmin());
     }
 
+    @GetMapping("/getAdmin")
+
     @PostMapping("/register")
     public RegisterResponseDTO createUser(@RequestBody RegisterRequestDTO registerRequestDTO){
         Optional<User> duplicateOptional = userRepository.findByUsername(registerRequestDTO.getUsername());

@@ -28,13 +28,14 @@ public class BlogPostService {
     }
 
     public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser){
-        String title = newBlogPostRequestDTO.getTitle();
+
+        String blogTitle = newBlogPostRequestDTO.getBlogTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
-        String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "Image-Url was not valid!";
+        String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "";
 
 
-        blogPostRepository.save(new BlogPost(title, blogContentText, imageUrl, sessionUser));
+        blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));
 
-        return new NewBlogPostResponseDTO(title, blogContentText, imageUrl, sessionUser.getUsername());
+        return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
     }
 }
