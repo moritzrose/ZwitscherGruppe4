@@ -61,6 +61,15 @@ public class UserController {
         return new UserCollection ( users );
     }
 
+    @GetMapping("/users/{id}")
+    public Optional<User> getUserById(@PathVariable Long id) {
+        Optional<User> userById = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
+
+        return userById;
+    }
 
     @PostMapping("/users/{id}/newadmin")
     public Optional<User> makeAdmin(@PathVariable Long id) {
@@ -74,13 +83,5 @@ public class UserController {
         return newAdmin;
     }
 
-    @GetMapping("/users/{id}")
-    public Optional<User> getUserById(@PathVariable Long id) {
-        Optional<User> userById = StreamSupport //
-                .stream(userRepository.findAll().spliterator(), false) //
-                .filter (user -> user.getId ()== id)
-                .findFirst();
-
-        return userById;
-    }
+    
 }
