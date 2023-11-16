@@ -28,6 +28,12 @@ Content-Type:application/json
 ### Get current rank for user
 GET http://localhost:8080/rank
 
+
+
+
+### Get current rank for user
+GET http://localhost:8080/allposts
+
 ### Create BlogPost
 POST http://localhost:8080/addnewpost
 Content-Type:application/json

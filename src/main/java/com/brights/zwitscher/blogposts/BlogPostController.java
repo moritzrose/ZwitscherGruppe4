@@ -2,6 +2,7 @@ package com.brights.zwitscher.blogposts;
 
 import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
+import com.brights.zwitscher.user.UserCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,25 +10,57 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class BlogPostController {
 
 
     private final BlogPostService blogPostService;
+    private final BlogPostRepository blogPostRepository;
+
+
 
     @Autowired
-    public BlogPostController(BlogPostService blogPostService) {
+    public BlogPostController(BlogPostService blogPostService, BlogPostRepository blogPostRepository) {
         this.blogPostService = blogPostService;
+        this.blogPostRepository = blogPostRepository;
     }
+
+
+//
+//    @GetMapping("/allposts")
+//    public List<BlogPost> getAllPosts(){
+//
+//        return blogPostService.getAllPosts();
+//
+//    }
+
+
+
 
 
     @GetMapping("/allposts")
-    public List<BlogPost> getAllPosts(){
+    public BlogPostCollection getAllPosts(){
 
-        return blogPostService.getAllPosts();
+        List<BlogPost> posts = StreamSupport //
+                .stream(blogPostRepository.findAll().spliterator(), false) //
+                .collect( Collectors.toList());
+        return new BlogPostCollection ( posts );
+
+//        List<BlogPost> posts = blogPostService.getAllPosts();
+//
+//        return new BlogPostCollection( posts );
 
     }
+
+
+
+
+
+
+
 
 
 
