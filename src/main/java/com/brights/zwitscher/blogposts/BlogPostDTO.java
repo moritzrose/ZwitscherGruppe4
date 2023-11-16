@@ -1,40 +1,33 @@
 package com.brights.zwitscher.blogposts;
 
 
-import com.brights.zwitscher.user.User;
-import jakarta.persistence.*;
-
-@Entity
-public class BlogPost {
+public class BlogPostDTO {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String title;
     private String content;
     private String image;
 
-    @ManyToOne
-    private User user;
+    private String username;
 
-    public BlogPost() {
+    public BlogPostDTO() {
     }
 
-    public BlogPost(String title, String content, String image, User user) {
+
+    public BlogPostDTO(String title, String content, String image, String username) {
         this.title = title;
         this.content = content;
         this.image = image;
-        this.user = user;
+        this.username = username;
     }
 
-    public Long getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public User getUsername() {
-        return user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getTitle() {

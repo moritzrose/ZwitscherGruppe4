@@ -18,9 +18,14 @@ public class BlogPostService {
         this.blogPostRepository = blogPostRepository;
     }
 
+
     public List<BlogPost> getAllPosts() {
 
-        return blogPostRepository.findAll();
+        return blogPostRepository.findAllOrderedByIdDesc();
+    }
+
+    public BlogPost getBlogPostById(Long postId) {
+        return blogPostRepository.findById(postId).orElse(null);
     }
 
     public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser){
