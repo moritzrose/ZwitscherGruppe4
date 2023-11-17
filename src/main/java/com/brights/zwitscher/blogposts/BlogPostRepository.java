@@ -14,6 +14,6 @@ import java.util.Stack;
 @Repository
 public interface BlogPostRepository extends JpaRepository<BlogPost,Long> {
 
-    @Query(value = "SELECT * FROM BLOG_POST ORDER BY BLOG_POST.timestamp DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM BLOG_POST ORDER BY BLOG_POST_TIME DESC", nativeQuery = true)
     List<BlogPost> findAllOrderedByTimestampDesc();
 }
