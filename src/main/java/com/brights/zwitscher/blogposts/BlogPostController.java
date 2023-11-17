@@ -9,27 +9,35 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class BlogPostController {
 
 
     private final BlogPostService blogPostService;
+    private final BlogPostRepository blogPostRepository;
+
+
 
     @Autowired
-    public BlogPostController(BlogPostService blogPostService) {
+    public BlogPostController(BlogPostService blogPostService, BlogPostRepository blogPostRepository) {
         this.blogPostService = blogPostService;
+        this.blogPostRepository = blogPostRepository;
     }
 
 
-    @GetMapping("/allposts")
-    public List<BlogPost> getAllPosts(){
-
-        return blogPostService.getAllPosts();
+    @GetMapping("/posts")
+    public BlogPostCollection getAllPosts(){
+        List<BlogPost> posts = StreamSupport //
+                .stream(blogPostRepository.findAll().spliterator(), false) //
+                .collect( Collectors.toList());
+        return new BlogPostCollection ( posts );
     }
 
     // nur Admin kann post hinzufügen
-    @PostMapping("/addnewpost")
+    @PostMapping("/post")
     public NewBlogPostResponseDTO addNewPost(@RequestBody NewBlogPostRequestDTO newBlogPostRequestDTO, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
         User sessionUser = sessionUserOptional
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));

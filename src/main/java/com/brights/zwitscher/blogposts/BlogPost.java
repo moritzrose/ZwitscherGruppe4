@@ -5,6 +5,7 @@ import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class BlogPost {
     private String title;
     private String content;
     private String image;
+    private Instant timestamp;
 
     @ManyToOne
     private User user;
@@ -55,6 +57,7 @@ public class BlogPost {
         this.content = content;
         this.image = image;
         this.user = user;
+        this.timestamp = Instant.now();
     }
 
     public Long getId() {
