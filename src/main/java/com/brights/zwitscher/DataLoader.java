@@ -31,9 +31,9 @@ public class DataLoader implements ApplicationRunner {
         user2.setAdmin(true);
         userRepository.save(user2);
 
-        BlogPost post1 = new BlogPost("Eintrag 1", "","",user1);
-        BlogPost post2 = new BlogPost("Eintrag 2", "Content bla b la b la","",user1);
-        BlogPost post3 = new BlogPost("Eintrag 3", "Content bla b la b la","",user1);
+        BlogPost post1 = new BlogPost("Eintrag 1", "Content ist cool cool cool cool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool cool","",user1);
+        BlogPost post2 = new BlogPost("Eintrag 2", "Content  b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b lbla b la b la","",user1);
+        BlogPost post3 = new BlogPost("Eintrag 3", "ContentContentContentContentContentContentContentContentContentContentContentContent","",user1);
         blogPostRepository.save(post1);
         blogPostRepository.save(post2);
         blogPostRepository.save(post3);

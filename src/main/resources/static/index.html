@@ -15,6 +15,7 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bulma.css">
 </head>
 <body>
 
@@ -30,7 +31,46 @@
 <template id="main-template">
     {% include "templates/check-session-valid.html" %}
 
-    <h2>First Steps</h2>
+
+    <section class="form-container hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                        <form action="" class="box"
+                              hx-post="http://localhost:8080/login"
+                              nunjucks-template="login-successful"
+                              hx-target=".form-container"
+                              hx-target-4*="#error-box-login">
+                            <div class="field">
+                                <label for="username" class="label">Username</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" class="input" name="username" placeholder="username" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="password" class="label">Password</label>
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input" name="password" placeholder="*******" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button class="button is-success">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="field">
+                                <a href="register.html">
+                                    Registrieren
+                                </a></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <div class="form-container">
         <div class="login-box">
             <strong>Login</strong> <br>
@@ -47,11 +87,6 @@
                     <div id="error-box-login"></div>
                 </form>
 
-                <a href="register.html">
-                    <button>
-                        Registrieren
-                    </button>
-                </a>
 
                 <section id="output1">
                 </section>

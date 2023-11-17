@@ -30,18 +30,13 @@
     {% include "templates/check-session-invalid.html" %}
     {% include "templates/navbar.html" %}
 
-    <h3>2. Overview of all users</h3>
     <div hx-get="http://localhost:8080/posts"
          hx-target="#output2"
          nunjucks-template="template2"
-         hx-trigger="load"
-    >All the users:
+         hx-trigger="load">
     </div>
 
-    <section id="output2">
-        Here ALL THE USERS will appear...
-    </section>
-
+    <section id="output2"></section>
 
 </template>
 
