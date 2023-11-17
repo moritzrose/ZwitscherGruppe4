@@ -2,7 +2,6 @@ package com.brights.zwitscher.blogposts;
 
 import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
-import com.brights.zwitscher.user.UserCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,19 +28,16 @@ public class BlogPostController {
     }
 
 
-    @GetMapping("/allposts")
+    @GetMapping("/posts")
     public BlogPostCollection getAllPosts(){
-
         List<BlogPost> posts = StreamSupport //
                 .stream(blogPostRepository.findAll().spliterator(), false) //
                 .collect( Collectors.toList());
         return new BlogPostCollection ( posts );
-
-        return blogPostService.getAllPosts();
     }
 
     // nur Admin kann post hinzufügen
-    @PostMapping("/addnewpost")
+    @PostMapping("/post")
     public NewBlogPostResponseDTO addNewPost(@RequestBody NewBlogPostRequestDTO newBlogPostRequestDTO, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
         User sessionUser = sessionUserOptional
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));

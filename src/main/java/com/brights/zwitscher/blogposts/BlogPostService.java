@@ -36,7 +36,7 @@ public class BlogPostService {
 
         String blogTitle = newBlogPostRequestDTO.getBlogTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
-        String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "";
+        String imageUrl = "";  //newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "";
 
 
         blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));

@@ -32,10 +32,10 @@ GET http://localhost:8080/rank
 
 
 ### Get current rank for user
-GET http://localhost:8080/allposts
+GET http://localhost:8080/posts
 
 ### Create BlogPost
-POST http://localhost:8080/addnewpost
+POST http://localhost:8080/post
 Content-Type:application/json
 
 {
@@ -53,7 +53,7 @@ Content-Type:application/json
 
 }
 ### GET all posts
-GET http://localhost:8080/allposts
+GET http://localhost:8080/posts
 
 ### Get all users
 GET http://localhost:8080/users
