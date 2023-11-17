@@ -74,7 +74,7 @@ public class UserController {
         return userById;
     }
 
-    @PostMapping("/users/{id}/toggleadmin")
+    @PostMapping("/users/toggleadmin/{id}")
     public Optional<User> toggleAdmin(@PathVariable Long id) {
         Optional<User> newAdmin = StreamSupport //
                 .stream(userRepository.findAll().spliterator(), false) //
@@ -86,5 +86,13 @@ public class UserController {
         return newAdmin;
     }
 
-    
+    @GetMapping("/users/adminstatus/{id}")
+    public Boolean getAdminStatus(@PathVariable Long id) {
+        Optional<User> userById = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
+
+        return userById.get().isAdmin ();
+    }
 }

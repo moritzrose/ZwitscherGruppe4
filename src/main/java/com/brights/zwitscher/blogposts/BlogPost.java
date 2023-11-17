@@ -62,7 +62,6 @@ public class BlogPost {
     }
 
 
-
     public Long getId() {
         return id;
     }

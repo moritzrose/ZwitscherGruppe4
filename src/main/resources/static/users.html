@@ -36,29 +36,75 @@
      nunjucks-template="template2"
      hx-trigger="load"
 >All the users:</div>
+<hr>
 <section id="output2">
     Here ALL THE USERS will appear...
 </section>
 <template id="template2">
-
     {% for user in userList %}
-        <p>{{user.id}}</p>
-        <p>{{user.username}}</p>
-    <p>Admin:
-        {{ "true" if (user.admin) else "false" }}-
-    </p>
-    <label>Admin:
+    <div id="user-{{user.id}}">
+                {{user.id}}
+                {{user.username}}
+        <p>Admin:
+            {{ "true" if (user.admin) else "false" }}
 
-        <input type="checkbox">
-        {{ checked if (user.admin)}}
-    </label>
-    <hr>
+
+        </p>
+        <br>
+        <button class="button"
+                hx-post="http://localhost:8080/users/toggleadmin/{{user.id}}"
+                nunjucks-template="single-user"
+
+                hx-target="#user-{{user.id}}">Change admin status</button>
+        <hr>
+    </div>
+
+
+
     {% endfor %}
 
+</template>
+<template id="single-user">
+    <div id="user-{{id}}">
+        {{id}}
+        {{username}}
+        <p>Admin:
+            {{ "true" if (admin) else "false" }}
+
+
+        </p>
+        <br>
+        <button class="button"
+                hx-post="http://localhost:8080/users/toggleadmin/{{id}}"
+                nunjucks-template="single-user"
+                hx-target="#user-{{id}}">Change admin status</button>
+        <hr>
+    </div>
 </template>
 
 </body>
 </html>
+
+
+<!--<template id="template2">-->
+
+<!--    {% for user in userList %}-->
+<!--    <p>{{user.id}}</p>-->
+<!--    <p>{{user.username}}</p>-->
+<!--    <p>Admin:-->
+<!--        {{ "true" if (user.admin) else "false" }}- -->
+<!--    </p>-->
+<!--    <label>Admin:-->
+
+<!--        <input type="checkbox">-->
+<!--        {{ checked if (user.admin)}}-->
+<!--    </label>-->
+<!--    <hr>-->
+<!--    {% endfor %}-->
+
+<!--</template>-->
+
+
 
 <!--onchange="toggleAdmin({{user.id}}-->
 <!--<h1>Your daily dose of memes ✌️</h1>-->
