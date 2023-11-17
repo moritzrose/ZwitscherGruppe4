@@ -18,7 +18,6 @@ public class DataLoader implements ApplicationRunner {
     private UserRepository userRepository;
     private BlogPostRepository blogPostRepository;
 
-
     @Autowired
     public DataLoader(UserRepository userRepository, BlogPostRepository blogPostRepository) {
         this.userRepository = userRepository;
