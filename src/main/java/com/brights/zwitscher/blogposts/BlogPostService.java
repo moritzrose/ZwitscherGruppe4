@@ -25,7 +25,7 @@ public class BlogPostService {
 
     public List<BlogPost> getAllPosts() {
 
-        return blogPostRepository.findAllOrderedByIdDesc();
+        return blogPostRepository.findAllOrderedByTimestampDesc ();
     }
 
     public BlogPost getBlogPostById(Long postId) {

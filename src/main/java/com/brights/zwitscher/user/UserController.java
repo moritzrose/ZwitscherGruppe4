@@ -74,14 +74,14 @@ public class UserController {
         return userById;
     }
 
-    @PostMapping("/users/{id}/newadmin")
-    public Optional<User> makeAdmin(@PathVariable Long id) {
+    @PostMapping("/users/{id}/toggleadmin")
+    public Optional<User> toggleAdmin(@PathVariable Long id) {
         Optional<User> newAdmin = StreamSupport //
                 .stream(userRepository.findAll().spliterator(), false) //
                 .filter (user -> user.getId ()== id)
                 .findFirst();
 
-        newAdmin.get().setAdmin (true);
+        newAdmin.get().setAdmin (!newAdmin.get().isAdmin ());
         userRepository.save(newAdmin.get());
         return newAdmin;
     }
