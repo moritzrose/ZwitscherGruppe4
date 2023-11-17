@@ -15,6 +15,7 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bulma.css">
 </head>
 <body>
 
@@ -30,7 +31,49 @@
 <template id="main-template">
     {% include "templates/check-session-valid.html" %}
 
-    <h2>Registrierung als neuer Benutzer</h2>
+
+    <section class="form-container hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+
+                        <form action="" class="box"
+                              hx-post="http://localhost:8080/register"
+                              nunjucks-template="register-successful"
+                              hx-target=".form-container"
+                              hx-target-4*="#error-box-register">
+                            <div class="field">
+                                <strong>Neuen Benutzer erstellen</strong> <br>
+                                <label  class="label" for="username">Neuer Benutzername</label>
+                                <div class="control has-icons-left">
+                                    <input type="text" class="input" name="username" placeholder="username" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label  class="label">Neues Passwort</label>
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input" name="password1" placeholder="*******" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label  class="label">Passwort wiederholen</label>
+                                <div class="control has-icons-left">
+                                    <input type="password" class="input" name="password2" placeholder="*******" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button class="button is-success">
+                                    Bestätigen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="form-container">
         <div class="register-box">
             <strong>Bitte geben Sie Ihre Daten an</strong> <br>
@@ -39,9 +82,9 @@
                       nunjucks-template="register-successful"
                       hx-target=".form-container"
                       hx-target-4*="#error-box-register">
-                    <label for="username">neuer Benutzer</label>
+                    <label for="username">Neuer Username</label>
                     <input type="text" id="username" name="username">
-                    <label for="password1">neues Passwort</label>
+                    <label for="password1">Neues Passwort</label>
                     <input type="password" id="password1" name="password1">
                     <label for="password2">Passwort wiederholen</label>
                     <input type="password" id="password2" name="password2">

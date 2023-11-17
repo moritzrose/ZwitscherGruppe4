@@ -3,12 +3,10 @@ package com.brights.zwitscher.comment;
 import com.brights.zwitscher.blogposts.BlogPost;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 public class Comment {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +20,12 @@ public class Comment {
     @JsonIgnore
     private BlogPost blogPost;
 
-    public Comment() {
-        commentTime=LocalDateTime.now();
+    public Comment(String comment) {
+        this.comment = comment;
+        this.commentTime=LocalDateTime.now();
     }
+
+    public Comment() {}
 
 
     public LocalDateTime getCommentTime() {

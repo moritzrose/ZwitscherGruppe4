@@ -6,6 +6,7 @@ import com.brights.zwitscher.user.User;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +21,14 @@ public class BlogPost {
     private String title;
     private String content;
     private String image;
-    private Instant timestamp;
+    private LocalDateTime blogPostTime;
 
     @ManyToOne
     private User user;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
     @OrderBy("commentTime")
-    private List<Comment> comments  = new ArrayList<>(); //wird automatisch mit allen
+    private List<Comment> comments  = new ArrayList<>(); //wird automatisch mit allen Kommentaren erstellt.
 
     public BlogPost() {
     }
@@ -57,7 +58,7 @@ public class BlogPost {
         this.content = content;
         this.image = image;
         this.user = user;
-        this.timestamp = Instant.now();
+        this.blogPostTime = LocalDateTime.now();
     }
 
 
