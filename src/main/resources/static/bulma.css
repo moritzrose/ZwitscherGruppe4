@@ -4558,7 +4558,7 @@ fieldset[disabled] .select select:hover {
 
 .control.has-icons-left .input,
 .control.has-icons-left .select select {
-  padding-left: 2.5em;
+  padding-left: 1em;
 }
 
 .control.has-icons-left .icon.is-left {

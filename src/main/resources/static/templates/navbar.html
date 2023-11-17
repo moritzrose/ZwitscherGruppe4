@@ -12,8 +12,10 @@
     <div class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="home.html">Home</a>
+            <a class="navbar-item" href="profil.html">Profil</a>
             {%if admin%}
             <a class="navbar-item" href="settings.html">Settings</a>
+            <a class="navbar-item" href="newPost.html">Neuer Post</a>
             {% endif %}
 
         </div>
@@ -27,7 +29,6 @@
 </nav>
 <br>
 <template id="logout-triggered">
-    Logout 🏃 <strong>Redirecting ...</strong>
     <span>Good by {{username}}</span>
-    {{redirect("index.html",500)}}
+    {{redirect("index.html",1000)}}
 </template>
