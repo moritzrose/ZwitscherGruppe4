@@ -31,7 +31,7 @@ public class BlogPostController {
     @GetMapping("/posts")
     public BlogPostCollection getAllPosts(){
         List<BlogPost> posts = StreamSupport //
-                .stream(blogPostRepository.findAll().spliterator(), false) //
+                .stream(blogPostRepository.findAllOrderedByTimestampDesc ().spliterator(), false) //
                 .collect( Collectors.toList());
         return new BlogPostCollection ( posts );
     }

@@ -60,6 +60,8 @@ public class BlogPost {
         this.timestamp = Instant.now();
     }
 
+
+
     public Long getId() {
         return id;
     }
@@ -90,5 +92,13 @@ public class BlogPost {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 }

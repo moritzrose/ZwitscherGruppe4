@@ -9,6 +9,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
+
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -34,6 +37,10 @@ public class DataLoader implements ApplicationRunner {
         BlogPost post1 = new BlogPost("Eintrag 1", "","",user1);
         BlogPost post2 = new BlogPost("Eintrag 2", "Content bla b la b la","",user1);
         BlogPost post3 = new BlogPost("Eintrag 3", "Content bla b la b la","",user1);
+//
+//        Date timestamp = new Date ( )
+//        post1.setTimestamp (  );
+
         blogPostRepository.save(post1);
         blogPostRepository.save(post2);
         blogPostRepository.save(post3);
