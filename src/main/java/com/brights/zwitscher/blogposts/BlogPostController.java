@@ -42,7 +42,9 @@ public class BlogPostController {
         User sessionUser = sessionUserOptional
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
 
-        if(sessionUser.isAdmin()) return blogPostService.addNewPost(newBlogPostRequestDTO, sessionUser);
+        if(sessionUser.isAdmin()){
+            if (!newBlogPostRequestDTO.getBlogContentText().isBlank()) return blogPostService.addNewPost(newBlogPostRequestDTO, sessionUser);
+            else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Input is empty");}
         else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 

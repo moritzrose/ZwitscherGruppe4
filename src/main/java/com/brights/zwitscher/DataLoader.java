@@ -27,25 +27,42 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
         // Create user
-        User user1= new User("user1","12345");
-        userRepository.save(user1);
+
+        User codingCarl= new User("CodingCarl","12345");
+        userRepository.save(codingCarl);
+
+        User randomProgrammer = new User("RandomProgrammer","12345");
+        userRepository.save(randomProgrammer);
+        User iDontHack = new User("iDontHack","12345");
+        userRepository.save(iDontHack);
+        User larsgerhard = new User("Lars Gerhard","12345");
+        userRepository.save(larsgerhard);
 
         // Create admin
         User user2= new User("admin","12345");
         user2.setAdmin(true);
         userRepository.save(user2);
 
-        BlogPost post1 = new BlogPost("Eintrag 1", "Content ist cool cool cool cool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool cool","",user1);
-        BlogPost post2 = new BlogPost("Eintrag 2", "Content  b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b lbla b la b la","",user2);
-        BlogPost post3 = new BlogPost("Eintrag 3", "ContentContentContentContentContentContentContentContentContentContentContentContent","",user1);
+        BlogPost post1 = new BlogPost("", "Meine ersten Erfahrungen auf Stack Overflow waren wie eine Reise in ein fremdes Land. Ich stellte eine Frage und wurde mit einer Flut von Antworten und weiteren Fragen konfrontiert. ","",randomProgrammer);
 
-        Comment comment1 = new Comment(user1,"Was ist das denn für ein Quatsch????");
+        BlogPost post2 = new BlogPost("", "Einmal blickte ich auf meinen eigenen Code und fragte mich ernsthaft, wer ihn geschrieben hatte. Er schien so kompliziert und unverständlich, dass ich fast dachte, er sei von Außerirdischen verfasst worden.","",iDontHack);
+
+        BlogPost post3 = new BlogPost("", "Fehlermeldungen in der Programmierung sind wie Hieroglyphen. Ich erinnere mich an eine besonders kryptische Meldung, die mir sagte, dass \"null nicht null sein kann\".","",codingCarl);
+
+        BlogPost post4 = new BlogPost("", "Wenn ich Kommentare im Code schreibe, scheinen sie manchmal ein Eigenleben zu führen. Einmal schrieb ich \"Dieser Abschnitt ist selbsterklärend\", und kurz danach fragte mich ein Kollege, was ich damit gemeint hätte.","",larsgerhard);
+
+        Comment comment1 = new Comment(codingCarl,"Ich fühle mit dir!");
+        Comment comment2 = new Comment(codingCarl,"true Story...");
 
         post1.getComments().add(comment1);
         comment1.setBlogPost(post1);
 
+        post2.getComments().add(comment2);
+        comment2.setBlogPost(post2);
+
         blogPostRepository.save(post1);
         blogPostRepository.save(post2);
         blogPostRepository.save(post3);
+        blogPostRepository.save(post4);
     }
 }

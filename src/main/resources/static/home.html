@@ -53,6 +53,12 @@
 
 <template id="templateAdmin">
 
+    <div hx-get="http://localhost:8080/users"
+         hx-target="#output2"
+         nunjucks-template="template2"
+         hx-trigger="load"
+    ></div>
+
     {% for blogPost in blogPostList %}
 
     <div class="container">
@@ -115,7 +121,7 @@
                         <form action="" hx-post="http://localhost:8080/posts/{{blogPost.id}}/comments"
                               nunjucks-template="templateComment"
                               hx-target="previous .commentsAdmin"
-                              hx-swap="afterend">
+                              hx-swap="beforeend">
 
                             <div class="field">
                                 <p class="control">
@@ -136,8 +142,6 @@
                     </div>
                 </article>
             </div>
-
-            </article>
         </div>
     </div>
     <br>
@@ -170,6 +174,82 @@
     </article>
 </template>
 
+
+<template id="template2">
+    {% for user in userList %}
+    <div id="user-{{user.id}}">
+        {{user.id}}
+        {{user.username}}
+        <p>Admin: {{ "true" if (user.admin) else "false" }}</p>
+        <br>
+        <button class="button"
+                hx-post="http://localhost:8080/users/toggleadmin/{{user.id}}"
+                nunjucks-template="single-user"
+                hx-target="#user-{{user.id}}">Change admin status
+        </button>
+        <hr>
+    </div>
+    {% endfor %}
+</template>
+
+<template id="single-user">
+    <div id="user-{{id}}">
+        {{id}}
+        {{username}}
+        <p>Admin: {{ "true" if (admin) else "false" }}</p>
+        <br>
+        <button class="button"
+                hx-post="http://localhost:8080/users/toggleadmin/{{id}}"
+                nunjucks-template="single-user"
+                hx-target="#user-{{id}}">Change admin status
+        </button>
+        <hr>
+    </div>
+</template>
+<!----------------------------------PopUp for NewPost----------------------------------------------------->
+
+
+<div class="modal" id="modalNewPost">
+    <div class="modal-background" id="modal-backgroundNewPost"></div>
+    <div class="modal-card">
+        <form class="postCreationForm"
+              hx-post="http://localhost:8080/post">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Neuer Post</p>
+            </header>
+            <section class="modal-card-body">
+                <textarea class="textarea" id="postTextarea" name="blogContentText"
+                          placeholder="Schreibe einen neuen Post"></textarea>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
+            </footer>
+        </form>
+    </div>
+</div>
+<!----------------------------------PopUp for UserMenu----------------------------------------------------->
+<div class="modal" id="modalWindowMember">
+    <div class="modal-background" id="modal-backgroundMember"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Mitglieder verwalten</p>
+        </header>
+        <section class="modal-card-body">
+
+            <!--------------------------UserList----------------------------------->
+            <section id="output2">
+
+            </section>
+            <!----------------------------------------------------------------------->
+
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" id="cancelUserMenu">Abbrechen</button>
+        </footer>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="content has-text-centered">
         <p>
@@ -179,9 +259,51 @@
         </p>
     </div>
 </footer>
+
+
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+
+        setTimeout(function () {
+            let modalWindowMember = document.getElementById("modalWindowMember")
+            let modalBackgroundMember = document.getElementById("modal-backgroundMember")
+            let MitgliederVerwaltenButton = document.getElementById("MitgliederVerwaltenButton")
+            let cancelUserMenu = document.getElementById("cancelUserMenu")
+
+            MitgliederVerwaltenButton.addEventListener("click", () => {
+                modalWindowMember.classList.add("is-active")
+            })
+            modalBackgroundMember.addEventListener("click", () => {
+                modalWindowMember.classList.remove("is-active")
+            })
+            cancelUserMenu.addEventListener("click", () => {
+                modalWindowMember.classList.remove("is-active")
+            })
+        }, 20);
+
+        setTimeout(function () {
+            let modalWindowNewPost = document.getElementById("modalNewPost")
+            let modalBackgroundNewPost = document.getElementById("modal-backgroundNewPost")
+            let newPostButton = document.getElementById("neuerPostButton")
+            let submitPostButton = document.getElementById("submitPostButton")
+            let postTextarea = document.getElementById("postTextarea")
+
+            newPostButton.addEventListener("click", () => {
+                modalWindowNewPost.classList.add("is-active")
+            })
+            modalBackgroundNewPost.addEventListener("click", () => {
+                modalWindowNewPost.classList.remove("is-active")
+            })
+            submitPostButton.addEventListener("click", () => {
+
+                if (postTextarea.value !== "") {
+                    modalWindowNewPost.classList.remove("is-active")
+                    location.reload()
+                }
+            })
+
+        }, 20);
 
         setTimeout(function () {
             let commentSubmitButtons = document.getElementsByClassName("commentSubmitButton")
@@ -189,15 +311,13 @@
                 commentSubmitButton.addEventListener("click", () => {
                     setTimeout(function () {
                         let commentTextareas = document.getElementsByTagName("textarea")
-                        for (textarea of commentTextareas){
+                        for (textarea of commentTextareas) {
                             textarea.value = ""
                         }
                     }, 10);
-
                 })
             }
         }, 300);
-
     })
 </script>
 </html>

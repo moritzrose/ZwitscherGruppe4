@@ -39,9 +39,7 @@ POST http://localhost:8080/post
 Content-Type:application/json
 
 {
-    "blogTitle" : "Test",
-    "blogContentText": "Hallo, mein Text!",
-    "imageUrl": "asd"
+    "blogContentText": "Hallo, mein Text!"
 }
 
 ### Create comment
@@ -62,7 +60,7 @@ GET http://localhost:8080/users
 GET http://localhost:8080/users/1
 
 ### Get user admin status
-GET http://localhost:8080/users/adminstatus/2
+GET http://localhost:8080/users/adminstatus/1
 
 ### Toggle user as admin or back as non-admin by id
 POST http://localhost:8080/users/toggleadmin/2
