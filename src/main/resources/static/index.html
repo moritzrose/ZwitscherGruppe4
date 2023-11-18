@@ -98,7 +98,7 @@
 <!-- These templates must not be nested in above template because it already would be interpolated as part of the GET user response -->
 <template id="login-template">
     {% if error %}
-    <h3>⚠️ Error ⚠️</h3>
+    <h3> Error </h3>
     <code>{{ message }}</code>
     {% else %}
     <!-- If no error, register view disappears. User can proceed with login -->
@@ -108,11 +108,11 @@
 <template id="login-successful">
     {% if error %}
     <div>
-        <h3>⚠️ Error ⚠️</h3>
+        <h3> Error </h3>
         <code>{{ message }}</code>
     </div>
     {% else %}
-    <p><strong>{{ username }}</strong>, successfully logged in ✅</p>
+    <p><strong>{{ username }}</strong>, successfully logged in!</p>
 
     {# Redirect to home after 500ms #}
     {{redirect("home.html",500)}}

@@ -1,6 +1,7 @@
 package com.brights.zwitscher.comment;
 
 import com.brights.zwitscher.blogposts.BlogPost;
+import com.brights.zwitscher.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +21,11 @@ public class Comment {
     @JsonIgnore
     private BlogPost blogPost;
 
-    public Comment(String comment) {
+    @ManyToOne
+    private User user;
+
+    public Comment(User user, String comment) {
+        this.user = user;
         this.comment = comment;
         this.commentTime=LocalDateTime.now();
     }
@@ -60,7 +65,8 @@ public class Comment {
         return id;
     }
 
-
-
+    public User getUser() {
+        return user;
+    }
 }
 

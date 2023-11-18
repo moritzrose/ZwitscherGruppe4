@@ -44,19 +44,20 @@ public class BlogPostService {
         return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
     }
 
-    public Comment updateBlogPostWithComment(Long blogId, Comment comment) {
+    public Comment updateBlogPostWithComment(Long blogId, User user, CommentRequestDTO comment) {
         // Check if post with provided id exists
         BlogPost blogPostById = getBlogPostById(blogId);
+        Comment newComment = new Comment(user, comment.getComment());
 
         if (blogPostById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id " + blogId + " not found");
         }
         // Comment wants to know about the entry it belongs to
-        comment.setBlogPost(blogPostById);
+        newComment.setBlogPost(blogPostById);
         // Blog post wants to know about the comment
-        blogPostById.getComments().add(comment);
+        blogPostById.getComments().add(newComment);
         this.blogPostRepository.save(blogPostById);
 
-        return comment;
+        return newComment;
     }
 }

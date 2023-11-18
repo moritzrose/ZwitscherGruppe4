@@ -10,8 +10,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -36,13 +34,16 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(user2);
 
         BlogPost post1 = new BlogPost("Eintrag 1", "Content ist cool cool cool cool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool coolcool cool cool","",user1);
-        BlogPost post2 = new BlogPost("Eintrag 2", "Content  b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b lbla b la b la","",user1);
+        BlogPost post2 = new BlogPost("Eintrag 2", "Content  b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b l b la b lbla b la b la","",user2);
         BlogPost post3 = new BlogPost("Eintrag 3", "ContentContentContentContentContentContentContentContentContentContentContentContent","",user1);
+
+        Comment comment1 = new Comment(user1,"Was ist das denn für ein Quatsch????");
+
+        post1.getComments().add(comment1);
+        comment1.setBlogPost(post1);
 
         blogPostRepository.save(post1);
         blogPostRepository.save(post2);
         blogPostRepository.save(post3);
-
-        post1.getComments().add(new Comment("Was ist das denn für ein Quatsch????"));
     }
 }
