@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +96,7 @@ public class BlogPost {
     }
 
     public LocalDateTime getBlogPostTime() {
-        return blogPostTime;
+
+        return blogPostTime.truncatedTo( ChronoUnit.SECONDS);
     }
 }
