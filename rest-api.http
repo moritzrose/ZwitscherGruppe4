@@ -43,7 +43,7 @@ POST http://localhost:8080/posts/1/comments
 Content-Type:application/json
 
 {
-  "comment": "second comments"
+  "comment": "second comments3"
 
 }
 ### GET all posts
