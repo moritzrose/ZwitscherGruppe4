@@ -98,7 +98,10 @@ public class BlogPost {
 
     public String getBlogPostTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
         return blogPostTime.format(formatter);
+    }
+
+    public void setBlogPostTime(int year, int month, int day, int hour, int minute, int second) {
+        this.blogPostTime = LocalDateTime.of(year, month, day, hour, minute, second);
     }
 }

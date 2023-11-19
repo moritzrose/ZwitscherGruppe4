@@ -41,8 +41,8 @@ public class Comment {
         return commentTime.format(formatter);
     }
 
-    public void setCommentTime(LocalDateTime commentTime) {
-        this.commentTime = commentTime;
+    public void setCommentTime(int year, int month, int day, int hour, int minute, int second) {
+        this.commentTime = LocalDateTime.of(year, month, day, hour, minute, second);
     }
 
     public String getComment() {
