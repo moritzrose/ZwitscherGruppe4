@@ -48,6 +48,7 @@ public class BlogPostController {
         else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 
+
     @PostMapping("/posts/{postId}/comments")
     public Comment addComment(@RequestBody CommentRequestDTO comment,@PathVariable Long postId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional ) {
         User sessionUser = sessionUserOptional

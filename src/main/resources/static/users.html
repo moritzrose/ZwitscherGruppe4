@@ -29,7 +29,6 @@
     {% include "templates/check-session-invalid.html" %}
     {% include "templates/navbar.html" %}
 
-
     <div hx-get="http://localhost:8080/users"
          hx-target="#output2"
          nunjucks-template="template2"
@@ -38,29 +37,13 @@
 
 </template>
 
-<table class="table is-bordered">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Benutzername</th>
-        <th>Status</th>
-        <th>Status ändern</th>
-    </tr>
-    </thead>
-    <tbody id="output2">
 
-    </tbody>
-</table>
+
+
 
 
 
 <template id="template2">
-    {% if error %}
-    <div>
-        <h3>⚠️ Error ⚠️</h3>
-        <code>{{ message }}</code>
-    </div>
-    {% endif %}
     {% for user in userList %}
     <tr id="user-{{user.id}}">
         <td>{{user.id}}</td>
@@ -77,6 +60,20 @@
     </tr>
     {% endfor %}
 </template>
+
+<table class="table is-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Benutzername</th>
+        <th>Status</th>
+        <th>Status ändern</th>
+    </tr>
+    </thead>
+    <tbody id="output2">
+
+    </tbody>
+</table>
 
 <template id="single-user">
     <tr id="user-{{id}}">
