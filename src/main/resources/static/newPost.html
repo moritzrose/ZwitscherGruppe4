@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zwitscher</title>
+    <link rel="stylesheet" href="newPost.css">
+    <link rel="stylesheet" href="bulma.css">
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/nunjucks@latest"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="templates/javascript-helpers.js"></script>
+</head>
+<body>
+
+<div hx-ext="client-side-templates,response-targets,json-enc"
+     hx-trigger="load"
+     hx-get="http://localhost:8080/user"
+     nunjucks-template="postCreation"
+     hx-target-4*="#main"
+     hx-target="#main"
+     id="main">
+</div>
+
+<template id="postCreation">
+    {% include "templates/check-session-invalid.html" %}
+    {%if not admin%}
+    <div class="noAccessContainer">
+        <h1>No Access!</h1>
+        <p>You are not an admin!</p>
+        <a class="postCreationButton" href="home.html">Go back</a>
+    </div>
+
+    {% else %}
+    {% include "templates/navbar.html" %}
+
+        <div class="postCreationContainer">
+            <form class="postCreationForm"
+                  hx-post="http://localhost:8080/post"
+                  nunjucks-template="postCreated-successful">
+                <textarea required class="textInputField postCreationInputTitle" name="blogTitle" id="blogTitle"
+                          placeholder="Type in your title..."></textarea>
+                <textarea required class="textInputField postCreationInputText" name="blogContentText" id="blogContent"
+                          placeholder="Let the world know what you are up to..."></textarea>
+                <div class="postCreationButtonContainer">
+                    <button class="postCreationButton" type="submit" href="home.html">Send</button>
+                    <a class="postCreationButton" href="home.html">Back</a>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+</template>
+
+<template id="postCreated-successful">
+    {% if not error %}
+    <h1>Post successfully created!</h1>
+    {{redirect("home.html",2000)}}
+    {% endif %}
+</template>
+</body>
+</html>

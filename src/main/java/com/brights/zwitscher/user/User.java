@@ -22,9 +22,19 @@ public class User {
     public User() {
     }
 
+    String profilPicture;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public void setProfilPicture(String profilPicture) {
+        this.profilPicture = profilPicture;
+    }
+
+    public String getProfilPicture() {
+        return profilPicture;
     }
 
     public String getUsername() {
