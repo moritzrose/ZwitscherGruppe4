@@ -74,6 +74,7 @@
                         <div class="content">
                             <p>
                                 <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                {% if user.admin %} <small>(Admin)</small> {% endif %}
                                 <br>
                                 {{blogPost.content}}
                                 <br>
@@ -94,6 +95,7 @@
                                 <div class="content">
                                     <p>
                                         <strong>{{comment.user.username}}</strong>
+                                        {% if comment.user.admin %} <small>(Admin)</small> {% endif %}
                                         <small>{{comment.commentTime}}</small>
                                         <br>
                                         {{comment.comment}}
@@ -164,7 +166,9 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                <strong>{{blogPost.user.username}}</strong>
+                                {% if blogPost.user.admin %} <small>(Admin)</small>{% endif %}
+                                <small>{{blogPost.blogPostTime}}</small>
                                 <br>
                                 {{blogPost.content}}
                                 <br>
@@ -185,6 +189,7 @@
                                 <div class="content">
                                     <p>
                                         <strong>{{comment.user.username}}</strong>
+                                        {% if comment.user.admin %} <small>(Admin)</small> {% endif %}
                                         <small>{{comment.commentTime}}</small>
                                         <br>
                                         {{comment.comment}}
@@ -242,10 +247,15 @@
 
 <template id="templateComment">
     <article class="media">
+        <figure class="media-left">
+            <p class="image is-48x48">
+                <img class="is-rounded" src="{{user.profilPicture}}">
+            </p>
+        </figure>
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong>{{user.username}}</strong> <small>{{commentTime}}</small>
+                    <strong>{{user.username}}</strong> {% if user.admin %} <small>(Admin)</small> {% endif %}<small>{{commentTime}}</small>
                     <br>
                     {{comment}}
                     <br>
