@@ -25,7 +25,7 @@ public class BlogPostService {
 
     public List<BlogPost> getAllPosts() {
 
-        return blogPostRepository.findAllOrderedByIdDesc();
+        return blogPostRepository.findAllOrderedByTimestampDesc ();
     }
 
     public BlogPost getBlogPostById(Long postId) {
@@ -33,29 +33,31 @@ public class BlogPostService {
     }
 
     public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser){
-        String title = newBlogPostRequestDTO.getTitle();
+
+        String blogTitle = newBlogPostRequestDTO.getBlogTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
-        String imageUrl = newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "Image-Url was not valid!";
+        String imageUrl = "";  //newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "";
 
 
-        blogPostRepository.save(new BlogPost(title, blogContentText, imageUrl, sessionUser));
+        blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));
 
-        return new NewBlogPostResponseDTO(title, blogContentText, imageUrl, sessionUser.getUsername());
+        return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
     }
 
-    public Comment updateBlogPostWithComment(Long blogId, Comment comment) {
+    public Comment updateBlogPostWithComment(Long blogId, User user, CommentRequestDTO comment) {
         // Check if post with provided id exists
         BlogPost blogPostById = getBlogPostById(blogId);
+        Comment newComment = new Comment(user, comment.getComment());
 
         if (blogPostById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id " + blogId + " not found");
         }
         // Comment wants to know about the entry it belongs to
-        comment.setBlogPost(blogPostById);
+        newComment.setBlogPost(blogPostById);
         // Blog post wants to know about the comment
-        blogPostById.getComments().add(comment);
+        blogPostById.getComments().add(newComment);
         this.blogPostRepository.save(blogPostById);
 
-        return comment;
+        return newComment;
     }
 }

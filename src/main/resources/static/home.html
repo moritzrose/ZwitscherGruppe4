@@ -6,55 +6,415 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
-
+    <link rel="stylesheet" href="bulma.css">
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/nunjucks@latest"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
+
+
 </head>
 
-<body>
-<div hx-ext="client-side-templates,response-targets,json-enc"
-      hx-trigger="load"
-      hx-get="http://localhost:8080/user"
-      nunjucks-template="main-template"
-      hx-target-4*="#main"
-      hx-target="#main"
-      id="main">
+<body hx-ext="client-side-templates,response-targets,json-enc">
+<div hx-trigger="load"
+     hx-get="http://localhost:8080/user"
+     nunjucks-template="main-template"
+     hx-target-4*="#main"
+     hx-target="#main"
+     id="main">
 </div>
 
 <template id="main-template">
+
     {% include "templates/check-session-invalid.html" %}
     {% include "templates/navbar.html" %}
 
+    {% if admin %}
+    <div hx-get="http://localhost:8080/posts"
+         hx-target="#adminOutput"
+         nunjucks-template="templateAdmin"
+         hx-trigger="load">
+    </div>
+    <section id="adminOutput"></section>
 
-    <h1>Home - Welcome</h1>
+    {% else %}
+    <div hx-get="http://localhost:8080/posts"
+         hx-target="#userOutput"
+         nunjucks-template="templateUser"
+         hx-trigger="load">
+    </div>
+    <section id="userOutput"></section>
 
-    <p>Welcome, <strong>{{ username }}</strong></p>
-
-    <hr>
-    <!-- This is just an example to get you started (see also RankController in backend). -->
-    <p>🤨 Do you want to know how many user registered before you?</p>
-    <button
-            hx-get="http://localhost:8080/rank"
-            nunjucks-template="rank-result-template"
-            hx-target="#rank-result">👉 Click here</button>
-    <div id="rank-result"></div>
-
-    <hr>
-    <!-- TODO Needs to be implemented. Best is to copy 'home.html' and modify it to your needs. -->
-    <p> Checkout latest blog posts </p>
-    <a href="newPost.html"><button> Add new Post 🌟</button></a>
-
-
-
+    {% endif %}
 
 </template>
 
-<template id="rank-result-template">
-    Hey, {{load('user').username}}, you are the <strong>{{rank}}th</strong> user on this site.
+<template id="templateAdmin">
+
+    <div hx-get="http://localhost:8080/users"
+         hx-target="#output2"
+         nunjucks-template="template2"
+         hx-trigger="load"
+    ></div>
+
+    {% for blogPost in blogPostList %}
+
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="{{blogPost.user.profilPicture}}">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                <br>
+                                {{blogPost.content}}
+                                <br>
+                                <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                            </p>
+                        </div>
+
+                        <!----------Hier beginnen die Kommentare!!!!--->
+
+                        {% for comment in blogPost.comments %}
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-48x48">
+                                    <img class="is-rounded" src="{{comment.user.profilPicture}}">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{comment.user.username}}</strong>
+                                        <small>{{comment.commentTime}}</small>
+                                        <br>
+                                        {{comment.comment}}
+                                        <br>
+                                        <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                        <section class="commentsAdmin"></section>
+                    </div>
+                </article>
+
+
+                <!----------Hier beginnt das Kommentarfeld!!!!-->
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-48x48">
+                            <img  src="">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+
+                        <form action="" hx-post="http://localhost:8080/posts/{{blogPost.id}}/comments"
+                              nunjucks-template="templateComment"
+                              hx-target="previous .commentsAdmin"
+                              hx-swap="beforeend">
+
+                            <div class="field">
+                                <p class="control">
+                                    <textarea class="textarea is-small" name="comment"
+                                              placeholder="Add a comment..."></textarea>
+                                </p>
+                            </div>
+
+                            <nav class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <button type="submit" class="commentSubmitButton button is-info">Comment
+                                        </button>
+                                    </div>
+                                </div>
+                            </nav>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <br>
+    </div>
+    {% endfor %}
 </template>
+<!-------------------------UserTemplate-------------------------------------------------------->
+<template id="templateUser">
+    {% for blogPost in blogPostList %}
+
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img class="is-rounded" src="{{blogPost.user.profilPicture}}">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                <br>
+                                {{blogPost.content}}
+                                <br>
+                                <small><a>Like</a></small>
+                            </p>
+                        </div>
+
+                        <!----------Hier beginnen die Kommentare!!!!--->
+
+                        {% for comment in blogPost.comments %}
+                        <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-48x48">
+                                    <img class="is-rounded" src="{{comment.user.profilPicture}}">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{comment.user.username}}</strong>
+                                        <small>{{comment.commentTime}}</small>
+                                        <br>
+                                        {{comment.comment}}
+                                        <br>
+                                        <small><a>Like</a></small>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                        {% endfor %}
+                        <section class="commentsAdmin"></section>
+                    </div>
+                </article>
+
+
+                <!----------Hier beginnt das Kommentarfeld!!!!-->
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-48x48">
+                            <img  src="">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+
+                        <form action="" hx-post="http://localhost:8080/posts/{{blogPost.id}}/comments"
+                              nunjucks-template="templateComment"
+                              hx-target="previous .commentsAdmin"
+                              hx-swap="beforeend">
+
+                            <div class="field">
+                                <p class="control">
+                                    <textarea class="textarea is-small" name="comment"
+                                              placeholder="Add a comment..."></textarea>
+                                </p>
+                            </div>
+
+                            <nav class="level">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <button type="submit" class="commentSubmitButton button is-info">Comment
+                                        </button>
+                                    </div>
+                                </div>
+                            </nav>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+    <br>
+    </div>
+    {% endfor %}
+</template>
+
+<template id="templateComment">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{user.username}}</strong> <small>{{commentTime}}</small>
+                    <br>
+                    {{comment}}
+                    <br>
+                    <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                </p>
+            </div>
+        </div>
+    </article>
+    </div>
+    </article>
+</template>
+
+
+<template id="template2">
+    {% for user in userList %}
+    <tr id="user-{{user.id}}">
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{ "Admin" if (user.admin) else "Nutzer" }}</td>
+        <td>
+            <button class="button"
+                    hx-post="http://localhost:8080/users/toggleadmin/{{user.id}}"
+                    nunjucks-template="single-user"
+                    hx-swap="outerHTML"
+                    hx-target="#user-{{user.id}}"
+            >ändern</button>
+        </td>
+    </tr>
+    {% endfor %}
+</template>
+
+<template id="single-user">
+    <tr id="user-{{id}}">
+        <td>{{id}}</td>
+        <td>{{username}}</td>
+        <td>
+            {{ "Admin" if (admin) else "Nutzer" }}
+        </td>
+        <td>
+            <button class="button"
+                    hx-post="http://localhost:8080/users/toggleadmin/{{id}}"
+                    nunjucks-template="single-user"
+                    hx-swap="outerHTML"
+                    hx-target="#user-{{id}}">ändern</button>
+        </td>
+    </tr>
+</template>
+<!----------------------------------PopUp for NewPost----------------------------------------------------->
+
+
+<div class="modal" id="modalNewPost">
+    <div class="modal-background" id="modal-backgroundNewPost"></div>
+    <div class="modal-card">
+        <form class="postCreationForm"
+              hx-post="http://localhost:8080/post">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Neuer Post</p>
+            </header>
+            <section class="modal-card-body">
+                <textarea class="textarea" id="postTextarea" name="blogContentText"
+                          placeholder="Schreibe einen neuen Post"></textarea>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
+            </footer>
+        </form>
+    </div>
+</div>
+<!----------------------------------PopUp for UserMenu----------------------------------------------------->
+<div class="modal" id="modalWindowMember">
+    <div class="modal-background" id="modal-backgroundMember"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Mitglieder verwalten</p>
+        </header>
+        <section class="modal-card-body">
+
+            <!--------------------------UserList----------------------------------->
+            <table class="table is-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Benutzername</th>
+                    <th>Status</th>
+                    <th>Status ändern</th>
+                </tr>
+                </thead>
+                <tbody id="output2">
+
+                </tbody>
+            </table>
+            <!----------------------------------------------------------------------->
+
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" id="cancelUserMenu">Bestätigen</button>
+        </footer>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+    </div>
+</footer>
+
+
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        setTimeout(function () {
+            let modalWindowMember = document.getElementById("modalWindowMember")
+            let modalBackgroundMember = document.getElementById("modal-backgroundMember")
+            let MitgliederVerwaltenButton = document.getElementById("MitgliederVerwaltenButton")
+            let cancelUserMenu = document.getElementById("cancelUserMenu")
+
+            MitgliederVerwaltenButton.addEventListener("click", () => {
+                modalWindowMember.classList.add("is-active")
+            })
+            modalBackgroundMember.addEventListener("click", () => {
+                modalWindowMember.classList.remove("is-active")
+            })
+            cancelUserMenu.addEventListener("click", () => {
+                modalWindowMember.classList.remove("is-active")
+            })
+        }, 20);
+
+        setTimeout(function () {
+            let modalWindowNewPost = document.getElementById("modalNewPost")
+            let modalBackgroundNewPost = document.getElementById("modal-backgroundNewPost")
+            let newPostButton = document.getElementById("neuerPostButton")
+            let submitPostButton = document.getElementById("submitPostButton")
+            let postTextarea = document.getElementById("postTextarea")
+
+            newPostButton.addEventListener("click", () => {
+                modalWindowNewPost.classList.add("is-active")
+            })
+            modalBackgroundNewPost.addEventListener("click", () => {
+                modalWindowNewPost.classList.remove("is-active")
+            })
+            submitPostButton.addEventListener("click", () => {
+
+                if (postTextarea.value !== "") {
+                    modalWindowNewPost.classList.remove("is-active")
+                    location.reload()
+                }
+            })
+
+        }, 20);
+
+        setTimeout(function () {
+            let commentSubmitButtons = document.getElementsByClassName("commentSubmitButton")
+            for (let commentSubmitButton of commentSubmitButtons) {
+                commentSubmitButton.addEventListener("click", () => {
+                    setTimeout(function () {
+                        let commentTextareas = document.getElementsByTagName("textarea")
+                        for (textarea of commentTextareas) {
+                            textarea.value = ""
+                        }
+                    }, 10);
+                })
+            }
+        }, 300);
+    })
+</script>
 </html>

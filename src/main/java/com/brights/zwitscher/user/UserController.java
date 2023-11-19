@@ -35,6 +35,8 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
         return new UserDTO(sessionUser.getUsername(), sessionUser.isAdmin());
     }
+//
+//    @GetMapping("/getAdmin")
 
     @PostMapping("/register")
     public RegisterResponseDTO createUser(@RequestBody RegisterRequestDTO registerRequestDTO){
@@ -54,12 +56,18 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public UserCollection getAllUsers() {
-        List<User> users = StreamSupport //
-                .stream(userRepository.findAll().spliterator(), false) //
-                .collect( Collectors.toList());
-        return new UserCollection ( users );
+    public UserCollection getAllUsers(@ModelAttribute("sessionUser") Optional<User> sessionUserOptional) {
+        User sessionUser = sessionUserOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));;
+        if(sessionUser.isAdmin()) {
+            List<User> users = StreamSupport //
+                    .stream ( userRepository.findAll ().spliterator (), false ) //
+                    .collect ( Collectors.toList () );
+            return new UserCollection ( users );
+        }
+        else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
+
 
     @GetMapping("/users/{id}")
     public Optional<User> getUserById(@PathVariable Long id) {
@@ -71,17 +79,25 @@ public class UserController {
         return userById;
     }
 
-    @PostMapping("/users/{id}/newadmin")
-    public Optional<User> makeAdmin(@PathVariable Long id) {
+    @PostMapping("/users/toggleadmin/{id}")
+    public Optional<User> toggleAdmin(@PathVariable Long id) {
         Optional<User> newAdmin = StreamSupport //
                 .stream(userRepository.findAll().spliterator(), false) //
                 .filter (user -> user.getId ()== id)
                 .findFirst();
 
-        newAdmin.get().setAdmin (true);
+        newAdmin.get().setAdmin (!newAdmin.get().isAdmin ());
         userRepository.save(newAdmin.get());
         return newAdmin;
     }
 
-    
+    @GetMapping("/users/adminstatus/{id}")
+    public Boolean getAdminStatus(@PathVariable Long id) {
+        Optional<User> userById = StreamSupport //
+                .stream(userRepository.findAll().spliterator(), false) //
+                .filter (user -> user.getId ()== id)
+                .findFirst();
+
+        return userById.get().isAdmin ();
+    }
 }

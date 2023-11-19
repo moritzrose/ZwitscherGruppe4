@@ -1,14 +1,15 @@
 package com.brights.zwitscher.comment;
 
 import com.brights.zwitscher.blogposts.BlogPost;
+import com.brights.zwitscher.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class Comment {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,17 +23,26 @@ public class Comment {
     @JsonIgnore
     private BlogPost blogPost;
 
-    public Comment() {
-        commentTime=LocalDateTime.now();
+    @ManyToOne
+    private User user;
+
+    public Comment(User user, String comment) {
+        this.user = user;
+        this.comment = comment;
+        this.commentTime=LocalDateTime.now();
     }
 
+    public Comment() {}
 
-    public LocalDateTime getCommentTime() {
-        return commentTime;
+
+    public String getCommentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return commentTime.format(formatter);
     }
 
-    public void setCommentTime(LocalDateTime commentTime) {
-        this.commentTime = commentTime;
+    public void setCommentTime(int year, int month, int day, int hour, int minute, int second) {
+        this.commentTime = LocalDateTime.of(year, month, day, hour, minute, second);
     }
 
     public String getComment() {
@@ -59,7 +69,8 @@ public class Comment {
         return id;
     }
 
-
-
+    public User getUser() {
+        return user;
+    }
 }
 

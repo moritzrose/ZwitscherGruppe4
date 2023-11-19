@@ -5,6 +5,10 @@ import com.brights.zwitscher.comment.Comment;
 import com.brights.zwitscher.user.User;
 import jakarta.persistence.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ public class BlogPost {
     private String title;
     private String content;
     private String image;
+    private LocalDateTime blogPostTime;
 
     @ManyToOne
     private User user;
@@ -55,7 +60,9 @@ public class BlogPost {
         this.content = content;
         this.image = image;
         this.user = user;
+        this.blogPostTime = LocalDateTime.now();
     }
+
 
     public Long getId() {
         return id;
@@ -87,5 +94,14 @@ public class BlogPost {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getBlogPostTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return blogPostTime.format(formatter);
+    }
+
+    public void setBlogPostTime(int year, int month, int day, int hour, int minute, int second) {
+        this.blogPostTime = LocalDateTime.of(year, month, day, hour, minute, second);
     }
 }

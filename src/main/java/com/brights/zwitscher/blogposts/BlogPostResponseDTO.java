@@ -8,7 +8,6 @@ public class BlogPostResponseDTO {
     private String title;
     private String content;
     private String image;
-
     private String username;
 
     public BlogPostResponseDTO() {
