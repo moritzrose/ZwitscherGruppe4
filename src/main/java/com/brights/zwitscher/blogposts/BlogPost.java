@@ -102,7 +102,7 @@ public class BlogPost {
         return blogPostTime.format(formatter);
     }
 
-    public void setBlogPostTime(int year, int month, int day, int hour, int minute, int second) {
-        this.blogPostTime = LocalDateTime.of(year, month, day, hour, minute, second);
+    public void setBlogPostTime(int year, int month, int day, int hour, int minute) {
+        this.blogPostTime = LocalDateTime.of(year, month, day, hour, minute);
     }
 }
