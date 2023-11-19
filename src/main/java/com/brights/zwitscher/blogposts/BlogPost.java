@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 public class BlogPost {
@@ -97,7 +98,7 @@ public class BlogPost {
     }
 
     public String getBlogPostTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm - dd. MMMM yyyy", Locale.GERMAN);
         return blogPostTime.format(formatter);
     }
 

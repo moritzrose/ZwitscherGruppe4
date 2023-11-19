@@ -62,7 +62,7 @@ public class DataLoader implements ApplicationRunner {
         Comment comment1_1 = new Comment(codingCarl,"Ich fühle mit dir!");
         Comment comment1_2 = new Comment(larsgerhard,"Willkommen im Dschungel von Stack Overflow! \uD83D\uDE04 Es ist normal, am Anfang überwältigt zu sein, aber mit der Zeit wirst du dich immer besser zurechtfinden.");
         Comment comment1_3 = new Comment(iDontHack,"Denk daran, dass auch erfahrene Entwickler einmal Anfänger waren. Du bist nicht allein auf dieser Reise, und wir sind hier, um zu helfen!");
-        comment1_1.setCommentTime  ( 2023,11,11,22,12,50 );
+        comment1_1.setCommentTime  ( 2023,6,11,22,12,50 );
 
         Comment comment2 = new Comment(codingCarl,"true Story...");
         comment2.setCommentTime  ( 2021,7,8,7,7,7);
