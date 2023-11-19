@@ -77,10 +77,14 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
+
+                                {% if blogPost.image != "" %}
                                 <div class="bildImPost1">
                                 <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
                                 </div>
                                 <br>
+                                {% endif %}
+
                                 <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
                             </p>
                         </div>
