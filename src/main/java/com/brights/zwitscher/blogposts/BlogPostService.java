@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class BlogPostService {
@@ -36,12 +38,27 @@ public class BlogPostService {
 
         String blogTitle = newBlogPostRequestDTO.getBlogTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
-        String imageUrl = "";  //newBlogPostRequestDTO.getImageUrl().matches("(?i)https?://.*\\\\.(?:png|jpg|jpeg|gif|svg|bmp|tiff)") ? newBlogPostRequestDTO.getImageUrl() : "";
 
+        // Extract the image URL from the content text
+        String imageUrl = extractImageUrl(blogContentText);
+
+        // Remove the image URL from the content text
+        blogContentText = blogContentText.replace(imageUrl, "");
 
         blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));
 
         return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
+    }
+
+    private String extractImageUrl(String text) {
+        String urlPattern = "(https?://\\S+\\.(jpg|jpeg|png|gif))";
+        Pattern pattern = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return "";
+        }
     }
 
     public Comment updateBlogPostWithComment(Long blogId, User user, CommentRequestDTO comment) {

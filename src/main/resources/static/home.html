@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
     <link rel="stylesheet" href="bulma.css">
+    <link rel="stylesheet" href="home.css">
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/nunjucks@latest"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
-
 
 </head>
 
@@ -76,6 +76,10 @@
                                 <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
                                 <br>
                                 {{blogPost.content}}
+                                <br>
+                                <div class="bildImPost1">
+                                <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
+                                </div>
                                 <br>
                                 <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
                             </p>
@@ -236,7 +240,6 @@
         </div>
     </div>
     <br>
-    </div>
     {% endfor %}
 </template>
 
@@ -253,8 +256,6 @@
                 </p>
             </div>
         </div>
-    </article>
-    </div>
     </article>
 </template>
 
@@ -306,8 +307,12 @@
             </header>
             <section class="modal-card-body">
                 <textarea class="textarea" id="postTextarea" name="blogContentText"
-                          placeholder="Schreibe einen neuen Post"></textarea>
+                          placeholder="Schreibe einen neuen Post und füge die URL deines Bildes hier ein"></textarea>
             </section>
+<!--            <section class="modal-card-body">-->
+<!--                <textarea class="textarea" id="postImageArea" name="imageUrl"-->
+<!--                          placeholder="füge die Url deines Bildes hier ein"></textarea>-->
+<!--            </section>-->
             <footer class="modal-card-foot">
                 <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
             </footer>
