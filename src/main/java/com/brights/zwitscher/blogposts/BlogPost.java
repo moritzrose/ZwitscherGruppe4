@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +96,9 @@ public class BlogPost {
         this.image = image;
     }
 
-    public LocalDateTime getBlogPostTime() {
+    public String getBlogPostTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        return blogPostTime.truncatedTo( ChronoUnit.SECONDS);
+        return blogPostTime.format(formatter);
     }
 }

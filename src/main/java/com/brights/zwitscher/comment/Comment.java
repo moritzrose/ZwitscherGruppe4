@@ -5,6 +5,7 @@ import com.brights.zwitscher.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 @Entity
@@ -34,8 +35,10 @@ public class Comment {
     public Comment() {}
 
 
-    public LocalDateTime getCommentTime() {
-        return commentTime.truncatedTo( ChronoUnit.SECONDS);
+    public String getCommentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return commentTime.format(formatter);
     }
 
     public void setCommentTime(LocalDateTime commentTime) {
