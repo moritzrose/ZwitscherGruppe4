@@ -33,7 +33,7 @@ public class BlogPostController {
         List<BlogPost> posts = StreamSupport //
                 .stream(blogPostRepository.findAllOrderedByTimestampDesc ().spliterator(), false) //
                 .collect( Collectors.toList());
-        return new BlogPostCollection ( posts );
+        return new BlogPostCollection(posts);
     }
 
     // nur Admin kann post hinzufügen
