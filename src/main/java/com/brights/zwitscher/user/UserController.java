@@ -56,11 +56,16 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public UserCollection getAllUsers() {
-        List<User> users = StreamSupport //
-                .stream(userRepository.findAll().spliterator(), false) //
-                .collect( Collectors.toList());
-        return new UserCollection ( users );
+    public UserCollection getAllUsers(@ModelAttribute("sessionUser") Optional<User> sessionUserOptional) {
+        User sessionUser = sessionUserOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));;
+        if(sessionUser.isAdmin()) {
+            List<User> users = StreamSupport //
+                    .stream ( userRepository.findAll ().spliterator (), false ) //
+                    .collect ( Collectors.toList () );
+            return new UserCollection ( users );
+        }
+        else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 
 
