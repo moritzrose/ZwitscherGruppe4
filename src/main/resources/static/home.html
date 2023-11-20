@@ -84,7 +84,7 @@
                                           hx-target="#blogPostContainer{{blogPost.id}}"
                                           hx-swap="delete">Post löschen</a> </small>
 
-                                {% if blogPost.image != "" %}
+                                {% if blogPost.image | length %}
                             <div class="bildImPost1">
                                 <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
                             </div>
@@ -193,7 +193,7 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                {% if blogPost.image != "" %}
+                                {% if blogPost.image  | length %}
                                 <div class="bildImPost1">
                                     <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
                                 </div>

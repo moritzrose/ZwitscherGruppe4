@@ -70,7 +70,7 @@ public class DataLoader implements ApplicationRunner {
 
         BlogPost post1 = new BlogPost("", "Meine ersten Erfahrungen auf Stack Overflow waren wie eine Reise in ein fremdes Land. Ich stellte eine Frage und wurde mit einer Flut von Antworten und weiteren Fragen konfrontiert. ", "", randomProgrammer);
         post1.setBlogPostTime(2023, 11, 11, 22, 12);
-        post1.setImage("https://pm1.aminoapps.com/6636/ddaf1c402f3767d7c934aac8520aa12c023fd31c_00.jpg");
+        post1.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1920px-Stack_Overflow_logo.svg.png");
 
 
         BlogPost post2 = new BlogPost("", "Einmal blickte ich auf meinen eigenen Code und fragte mich ernsthaft, wer ihn geschrieben hatte. Er schien so kompliziert und unverständlich, dass ich fast dachte, er sei von Außerirdischen verfasst worden.", "", iDontHack);
