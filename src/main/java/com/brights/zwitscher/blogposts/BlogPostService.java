@@ -97,8 +97,11 @@ public class BlogPostService {
                 }
             }
             if (commentToDelete != null){
+                System.out.println(blogPost.getComments().size());
                 blogPost.getComments().remove(commentToDelete);
+                System.out.println(blogPost.getComments().size());
                 blogPostRepository.save(blogPost);
+                System.out.println(blogPost.getComments().size());
                 break;
             }
         }

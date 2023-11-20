@@ -1,3 +1,17 @@
 .bildImPost1 {
-    max-width: 20%;
+    max-width: 40%;
+}
+
+.logoContainer {
+    width: 5%;
+}
+
+.logo{
+    border-radius: 50%;
+}
+
+.hero-body{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
