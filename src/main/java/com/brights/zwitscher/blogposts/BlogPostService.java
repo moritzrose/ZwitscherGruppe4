@@ -2,37 +2,39 @@ package com.brights.zwitscher.blogposts;
 
 
 import com.brights.zwitscher.comment.Comment;
+import com.brights.zwitscher.comment.CommentRepository;
 import com.brights.zwitscher.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogPostService {
 
     private final BlogPostRepository blogPostRepository;
+    private final CommentRepository commentRepository;
+
 
     @Autowired
-    public BlogPostService(BlogPostRepository blogPostRepository) {
+    public BlogPostService(BlogPostRepository blogPostRepository, CommentRepository commentRepository) {
         this.blogPostRepository = blogPostRepository;
+        this.commentRepository = commentRepository;
     }
-
 
     public List<BlogPost> getAllPosts() {
 
-        return blogPostRepository.findAllOrderedByTimestampDesc ();
+        return blogPostRepository.findAllOrderedByTimestampDesc();
     }
 
     public BlogPost getBlogPostById(Long postId) {
         return blogPostRepository.findById(postId).orElse(null);
     }
 
-    public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser){
+    public NewBlogPostResponseDTO addNewPost(NewBlogPostRequestDTO newBlogPostRequestDTO, User sessionUser) {
 
         String blogTitle = newBlogPostRequestDTO.getBlogTitle();
         String blogContentText = newBlogPostRequestDTO.getBlogContentText();
@@ -42,6 +44,15 @@ public class BlogPostService {
         blogPostRepository.save(new BlogPost(blogTitle, blogContentText, imageUrl, sessionUser));
 
         return new NewBlogPostResponseDTO(blogTitle, blogContentText, imageUrl, sessionUser.getUsername());
+    }
+
+    public Optional<BlogPost> deletePost(Long postId) {
+        Optional<BlogPost> postToDelete = blogPostRepository.findById(postId);
+
+        if (postToDelete.isPresent()) {
+            blogPostRepository.deleteById(postId);
+            return postToDelete;
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post doesn't exist!");
     }
 
     public Comment updateBlogPostWithComment(Long blogId, User user, CommentRequestDTO comment) {
@@ -59,5 +70,28 @@ public class BlogPostService {
         this.blogPostRepository.save(blogPostById);
 
         return newComment;
+    }
+
+    public Comment deleteComment(Long commentId) {
+        List<BlogPost> listOfBlogPosts = blogPostRepository.findAll();
+        Comment commentToDelete = null;
+
+        for (BlogPost blogPost : listOfBlogPosts){
+            for (Comment comment : blogPost.getComments()){
+                if(comment.getId().equals(commentId)){
+                    commentToDelete = comment;
+                    break;
+                }
+            }
+            if (commentToDelete != null){
+                blogPost.getComments().remove(commentToDelete);
+                blogPostRepository.save(blogPost);
+                break;
+            }
+        }
+        if (commentToDelete == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment does not exist");
+        }
+        return commentToDelete;
     }
 }

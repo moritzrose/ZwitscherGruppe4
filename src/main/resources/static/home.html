@@ -78,7 +78,7 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                                <small><a>Like</a> · <a>Edit</a> · <a hx-get="http://localhost:8080/post/{{blogPost.id}}/delete">Delete</a> </small>
                             </p>
                         </div>
 
