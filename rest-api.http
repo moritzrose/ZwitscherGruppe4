@@ -16,7 +16,7 @@ POST http://localhost:8080/login
 Content-Type:application/json
 
 {
-"username": "user1",
+"username": "admin",
 "password": "12345"
 }
 
@@ -55,7 +55,7 @@ Content-Type:application/json
 }
 
 ### Delete BlogPost
-GET http://localhost:8080/post/3/delete
+DELETE http://localhost:8080/post/3
 Content-Type:application/json
 
 //----------------------------------------------CommentEndpoints---------------------------------------------------
@@ -69,7 +69,7 @@ Content-Type:application/json
 }
 
 ### Delete Comment
-GET http://localhost:8080/posts/comment/1/delete
+DELETE http://localhost:8080/posts/comment/2
 Content-Type:application/json
 
 

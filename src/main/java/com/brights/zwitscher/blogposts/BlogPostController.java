@@ -48,7 +48,7 @@ public class BlogPostController {
         else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 
-    @GetMapping("post/{postId}/delete")
+    @DeleteMapping("post/{postId}")
     public Optional<BlogPost> deletePost(@PathVariable Long postId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
         User sessionUser = sessionUserOptional
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
@@ -66,7 +66,7 @@ public class BlogPostController {
         else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Input is empty");
     }
 
-    @GetMapping("/posts/comment/{commentId}/delete")
+    @DeleteMapping("/posts/comment/{commentId}")
     public Comment deleteComment(@PathVariable Long commentId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
         User sessionUser = sessionUserOptional
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));

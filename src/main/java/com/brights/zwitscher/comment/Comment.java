@@ -17,6 +17,7 @@ public class Comment {
     private Long id;
 
     private String comment;
+    private String image;
 
     private LocalDateTime commentTime;
 
@@ -31,6 +32,13 @@ public class Comment {
         this.user = user;
         this.comment = comment;
         this.commentTime=LocalDateTime.now();
+    }
+
+    public Comment(String comment, String image, LocalDateTime commentTime, User user) {
+        this.user = user;
+        this.comment = comment;
+        this.commentTime = commentTime;
+        this.image = image;
     }
 
     public Comment() {}
@@ -72,6 +80,13 @@ public class Comment {
 
     public User getUser() {
         return user;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public String getImage() {
+        return image;
     }
 }
 
