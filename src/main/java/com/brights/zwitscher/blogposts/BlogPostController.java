@@ -48,6 +48,15 @@ public class BlogPostController {
         else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 
+    @DeleteMapping("post/{postId}")
+    public Optional<BlogPost> deletePost(@PathVariable Long postId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
+        User sessionUser = sessionUserOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
+        if(sessionUser.isAdmin()){
+            return blogPostService.deletePost(postId);
+        }
+        else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
+    }
 
     @PostMapping("/posts/{postId}/comments")
     public Comment addComment(@RequestBody CommentRequestDTO comment,@PathVariable Long postId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional ) {
@@ -55,5 +64,15 @@ public class BlogPostController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
         if (!comment.getComment().isBlank()) return this.blogPostService.updateBlogPostWithComment(postId,sessionUser,comment);
         else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Input is empty");
+    }
+
+    @DeleteMapping("/posts/comment/{commentId}")
+    public Comment deleteComment(@PathVariable Long commentId, @ModelAttribute("sessionUser") Optional<User> sessionUserOptional){
+        User sessionUser = sessionUserOptional
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No valid login"));
+        if(sessionUser.isAdmin()){
+            return blogPostService.deleteComment(commentId);
+        }
+        else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not admin!");
     }
 }

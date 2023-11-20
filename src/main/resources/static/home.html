@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
     <link rel="stylesheet" href="bulma.css">
+    <link rel="stylesheet" href="home.css">
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
     <script src="https://unpkg.com/nunjucks@latest"></script>
@@ -14,10 +15,10 @@
     <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
     <script src="templates/javascript-helpers.js"></script>
 
-
 </head>
 
 <body hx-ext="client-side-templates,response-targets,json-enc">
+<div class="backgroundImage"></div>
 <div hx-trigger="load"
      hx-get="http://localhost:8080/user"
      nunjucks-template="main-template"
@@ -25,6 +26,7 @@
      hx-target="#main"
      id="main">
 </div>
+
 
 <template id="main-template">
 
@@ -61,7 +63,7 @@
 
     {% for blogPost in blogPostList %}
 
-    <div class="container">
+    <div id="blogPostContainer{{blogPost.id}}" class="container">
         <div class="card">
             <div class="card-content">
                 <article class="media">
@@ -74,17 +76,27 @@
                         <div class="content">
                             <p>
                                 <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                {% if user.admin %} <small>(Admin)</small> {% endif %}
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                                <small><a hx-delete="http://localhost:8080/post/{{blogPost.id}}"
+                                          hx-target="#blogPostContainer{{blogPost.id}}"
+                                          hx-swap="delete">Post löschen</a> </small>
+
+                                {% if blogPost.image | length %}
+                            <div class="bildImPost1">
+                                <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
+                            </div>
+                            <br>
+                            {% endif %}
                             </p>
                         </div>
 
                         <!----------Hier beginnen die Kommentare!!!!--->
 
                         {% for comment in blogPost.comments %}
-                        <article class="media">
+                        <article id="comment{{comment.id}}" class="media">
                             <figure class="media-left">
                                 <p class="image is-48x48">
                                     <img class="is-rounded" src="{{comment.user.profilPicture}}">
@@ -94,11 +106,22 @@
                                 <div class="content">
                                     <p>
                                         <strong>{{comment.user.username}}</strong>
+                                        {% if comment.user.admin %} <small>(Admin)</small> {% endif %}
                                         <small>{{comment.commentTime}}</small>
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+
+                                        {% if comment.image | length %}
+                                        <div class="bildImComment1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image1">
+                                        </div>
+                                        <br>
+                                        {% endif %}
+
+                                        <small><a hx-delete="http://localhost:8080/posts/comment/{{comment.id}}"
+                                                  hx-target="#comment{{comment.id}}"
+                                                  hx-swap="delete">Kommentar löschen</a> </small>
                                     </p>
                                 </div>
                             </div>
@@ -113,7 +136,7 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-48x48">
-                            <img  src="">
+                            <img src="">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -126,7 +149,7 @@
                             <div class="field">
                                 <p class="control">
                                     <textarea class="textarea is-small" name="comment"
-                                              placeholder="Add a comment..."></textarea>
+                                              placeholder="Füge hier deinen Kommentar und/oder ein unverschlüsseltes Bild hinzu..."></textarea>
                                 </p>
                             </div>
 
@@ -164,11 +187,18 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
+                                <strong>{{blogPost.user.username}}</strong>
+                                {% if blogPost.user.admin %} <small>(Admin)</small>{% endif %}
+                                <small>{{blogPost.blogPostTime}}</small>
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a></small>
+                                {% if blogPost.image  | length %}
+                                <div class="bildImPost1">
+                                    <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
+                                </div>
+                                <br>
+                                {% endif %}
                             </p>
                         </div>
 
@@ -185,11 +215,17 @@
                                 <div class="content">
                                     <p>
                                         <strong>{{comment.user.username}}</strong>
+                                        {% if comment.user.admin %} <small>(Admin)</small> {% endif %}
                                         <small>{{comment.commentTime}}</small>
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        <small><a>Like</a></small>
+                                        {% if comment.image | length %}
+                                        <div class="bildImComment1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image2">
+                                        </div>
+                                        <br>
+                                        {% endif %}
                                     </p>
                                 </div>
                             </div>
@@ -204,7 +240,7 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-48x48">
-                            <img  src="">
+                            <img src="">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -217,7 +253,7 @@
                             <div class="field">
                                 <p class="control">
                                     <textarea class="textarea is-small" name="comment"
-                                              placeholder="Add a comment..."></textarea>
+                                              placeholder="Füge hier deinen Kommentar und/oder ein unverschlüsseltes Bild hinzu..."></textarea>
                                 </p>
                             </div>
 
@@ -236,25 +272,42 @@
         </div>
     </div>
     <br>
-    </div>
     {% endfor %}
 </template>
 
 <template id="templateComment">
-    <article class="media">
+    <article id="comment{{id}}" class="media">
+        <figure class="media-left">
+            <p class="image is-48x48">
+                <img class="is-rounded" src="{{user.profilPicture}}">
+            </p>
+        </figure>
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong>{{user.username}}</strong> <small>{{commentTime}}</small>
+                    <strong>{{user.username}}</strong> {% if user.admin %} <small>(Admin)</small> {% endif %}<small>{{commentTime}}</small>
                     <br>
                     {{comment}}
                     <br>
-                    <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                    {% if image | length %}
+                    <div class="bildImComment1">
+                        <img width="640" height="360" src="{{image}}" alt="Comment Image3">
+                    </div>
+                    <br>
+                    {% endif %}
+                    <small>
+                        {% if user.admin %}
+                        <small>
+                            <a hx-delete="http://localhost:8080/posts/comment/{{id}}"
+                               hx-target="#comment{{id}}"
+                               hx-swap="delete">
+                                Rückgängig</a>
+                        </small>
+                        {% endif %}
+                    </small>
                 </p>
             </div>
         </div>
-    </article>
-    </div>
     </article>
 </template>
 
@@ -271,7 +324,8 @@
                     nunjucks-template="single-user"
                     hx-swap="outerHTML"
                     hx-target="#user-{{user.id}}"
-            >ändern</button>
+            >ändern
+            </button>
         </td>
     </tr>
     {% endfor %}
@@ -289,7 +343,8 @@
                     hx-post="http://localhost:8080/users/toggleadmin/{{id}}"
                     nunjucks-template="single-user"
                     hx-swap="outerHTML"
-                    hx-target="#user-{{id}}">ändern</button>
+                    hx-target="#user-{{id}}">ändern
+            </button>
         </td>
     </tr>
 </template>
@@ -306,7 +361,7 @@
             </header>
             <section class="modal-card-body">
                 <textarea class="textarea" id="postTextarea" name="blogContentText"
-                          placeholder="Schreibe einen neuen Post"></textarea>
+                          placeholder="Schreibe einen neuen Post und füge die URL deines unverschlüsselten Bildes hier ein"></textarea>
             </section>
             <footer class="modal-card-foot">
                 <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
@@ -356,8 +411,6 @@
         </p>
     </div>
 </footer>
-
-
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
