@@ -69,7 +69,7 @@ Content-Type:application/json
 }
 
 ### Delete Comment
-DELETE http://localhost:8080/posts/comment/1
+DELETE http://localhost:8080/posts/comment/2
 Content-Type:application/json
 
 

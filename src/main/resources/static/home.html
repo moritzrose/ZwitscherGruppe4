@@ -78,23 +78,23 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a> · <a>Edit</a> · <a hx-delete="http://localhost:8080/post/{{blogPost.id}}"
-                                hx-target="#blogPostContainer{{blogPost.id}}"
-                                hx-swap="delete">Delete</a> </small>
+                                <small><a hx-delete="http://localhost:8080/post/{{blogPost.id}}"
+                                          hx-target="#blogPostContainer{{blogPost.id}}"
+                                          hx-swap="delete">Post löschen</a> </small>
 
                                 {% if blogPost.image != "" %}
-                                <div class="bildImPost1">
+                            <div class="bildImPost1">
                                 <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
-                                </div>
-                                <br>
-                                {% endif %}
+                            </div>
+                            <br>
+                            {% endif %}
                             </p>
                         </div>
 
                         <!----------Hier beginnen die Kommentare!!!!--->
 
                         {% for comment in blogPost.comments %}
-                        <article class="media">
+                        <article id="comment{{comment.id}}" class="media">
                             <figure class="media-left">
                                 <p class="image is-48x48">
                                     <img class="is-rounded" src="{{comment.user.profilPicture}}">
@@ -109,7 +109,9 @@
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                                        <small><a hx-delete="http://localhost:8080/posts/comment/{{comment.id}}"
+                                                  hx-target="#comment{{comment.id}}"
+                                                  hx-swap="delete">Kommentar löschen</a> </small>
                                     </p>
                                 </div>
                             </div>
@@ -124,7 +126,7 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-48x48">
-                            <img  src="">
+                            <img src="">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -181,7 +183,6 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a></small>
                             </p>
                         </div>
 
@@ -203,7 +204,6 @@
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        <small><a>Like</a></small>
                                     </p>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-48x48">
-                            <img  src="">
+                            <img src="">
                         </p>
                     </figure>
                     <div class="media-content">
@@ -254,7 +254,7 @@
 </template>
 
 <template id="templateComment">
-    <article class="media">
+    <article id="comment{{id}}" class="media">
         <figure class="media-left">
             <p class="image is-48x48">
                 <img class="is-rounded" src="{{user.profilPicture}}">
@@ -267,7 +267,16 @@
                     <br>
                     {{comment}}
                     <br>
-                    <small><a>Like</a> · {% if user.admin %}<a>Edit</a> · <a>Delete</a> {% endif %} </small>
+                    <small>
+                        {% if user.admin %}
+                        <small>
+                            <a hx-delete="http://localhost:8080/posts/comment/{{id}}"
+                               hx-target="#comment{{id}}"
+                               hx-swap="delete">
+                                Rückgängig</a>
+                        </small>
+                        {% endif %}
+                    </small>
                 </p>
             </div>
         </div>
@@ -287,7 +296,8 @@
                     nunjucks-template="single-user"
                     hx-swap="outerHTML"
                     hx-target="#user-{{user.id}}"
-            >ändern</button>
+            >ändern
+            </button>
         </td>
     </tr>
     {% endfor %}
@@ -305,7 +315,8 @@
                     hx-post="http://localhost:8080/users/toggleadmin/{{id}}"
                     nunjucks-template="single-user"
                     hx-swap="outerHTML"
-                    hx-target="#user-{{id}}">ändern</button>
+                    hx-target="#user-{{id}}">ändern
+            </button>
         </td>
     </tr>
 </template>
@@ -324,10 +335,10 @@
                 <textarea class="textarea" id="postTextarea" name="blogContentText"
                           placeholder="Schreibe einen neuen Post und füge die URL deines Bildes hier ein"></textarea>
             </section>
-<!--            <section class="modal-card-body">-->
-<!--                <textarea class="textarea" id="postImageArea" name="imageUrl"-->
-<!--                          placeholder="füge die Url deines Bildes hier ein"></textarea>-->
-<!--            </section>-->
+            <!--            <section class="modal-card-body">-->
+            <!--                <textarea class="textarea" id="postImageArea" name="imageUrl"-->
+            <!--                          placeholder="füge die Url deines Bildes hier ein"></textarea>-->
+            <!--            </section>-->
             <footer class="modal-card-foot">
                 <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
             </footer>
@@ -376,8 +387,6 @@
         </p>
     </div>
 </footer>
-
-
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -435,6 +444,18 @@
                 })
             }
         }, 300);
+        /*setTimeout(function () {
+            let backgroundImages = document.getElementsByClassName("backgroundImages")
+
+            for (let pic of backgroundImages){
+                let randomTop = Math.random() * window.innerHeight;
+                let randomLeft = Math.random() * window.innerWidth;
+
+                pic.style.top = randomTop + 'px';
+                pic.style.left = randomLeft + 'px';
+            }
+
+        }, 10);*/
     })
 </script>
 </html>
