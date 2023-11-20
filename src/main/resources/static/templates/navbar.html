@@ -22,7 +22,7 @@
             <div class="navbar-item" href="home.html"></div>
             <div class="navbar-item" href="home.html"></div>
             <a class="navbar-item" href="home.html">Home</a>
-            <a class="navbar-item" href="">Profil</a>
+
             {%if admin%}
             <a class="navbar-item" id="MitgliederVerwaltenButton">Mitglieder verwalten</a>
             <a class="navbar-item" id="neuerPostButton">neuer Post</a>
@@ -44,6 +44,6 @@
 </nav>
 <br>
 <template id="logout-triggered">
-    <span>Good by {{username}}</span>
+    <span>Auf Wiedersehen, {{username}}</span>
     {{redirect("index.html",1000)}}
 </template>
