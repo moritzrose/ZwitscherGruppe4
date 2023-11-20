@@ -19,7 +19,7 @@ public class BlogPostService {
     private final BlogPostRepository blogPostRepository;
 
     @Autowired
-    public BlogPostService(BlogPostRepository blogPostRepository, CommentRepository commentRepository) {
+    public BlogPostService(BlogPostRepository blogPostRepository) {
         this.blogPostRepository = blogPostRepository;
     }
 
