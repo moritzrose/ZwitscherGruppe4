@@ -111,15 +111,17 @@
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        <small><a hx-delete="http://localhost:8080/posts/comment/{{comment.id}}"
-                                                  hx-target="#comment{{comment.id}}"
-                                                  hx-swap="delete">Kommentar löschen</a> </small>
-                                        {% if comment.image != "" %}
-                                        <div class="bildImPost1">
-                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image">
+
+                                        {% if comment.image | length %}
+                                        <div class="bildImComment1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image1">
                                         </div>
                                         <br>
                                         {% endif %}
+
+                                        <small><a hx-delete="http://localhost:8080/posts/comment/{{comment.id}}"
+                                                  hx-target="#comment{{comment.id}}"
+                                                  hx-swap="delete">Kommentar löschen</a> </small>
                                     </p>
                                 </div>
                             </div>
@@ -147,7 +149,7 @@
                             <div class="field">
                                 <p class="control">
                                     <textarea class="textarea is-small" name="comment"
-                                              placeholder="Add a comment..."></textarea>
+                                              placeholder="Füge hier deinen Kommentar und/oder ein unverschlüsseltes Bild hinzu..."></textarea>
                                 </p>
                             </div>
 
@@ -218,9 +220,9 @@
                                         <br>
                                         {{comment.comment}}
                                         <br>
-                                        {% if comment.image != "" %}
-                                        <div class="bildImPost1">
-                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image">
+                                        {% if comment.image | length %}
+                                        <div class="bildImComment1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image2">
                                         </div>
                                         <br>
                                         {% endif %}
@@ -251,7 +253,7 @@
                             <div class="field">
                                 <p class="control">
                                     <textarea class="textarea is-small" name="comment"
-                                              placeholder="Add a comment..."></textarea>
+                                              placeholder="Füge hier deinen Kommentar und/oder ein unverschlüsseltes Bild hinzu..."></textarea>
                                 </p>
                             </div>
 
@@ -287,9 +289,9 @@
                     <br>
                     {{comment}}
                     <br>
-                    {% if image != "" %}
-                    <div class="bildImPost1">
-                        <img width="640" height="360" src="{{image}}" alt="Comment Image">
+                    {% if image | length %}
+                    <div class="bildImComment1">
+                        <img width="640" height="360" src="{{image}}" alt="Comment Image3">
                     </div>
                     <br>
                     {% endif %}
