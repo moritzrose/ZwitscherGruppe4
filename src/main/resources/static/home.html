@@ -75,8 +75,8 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <strong>{{blogPost.user.username}}</strong> <small>{{blogPost.blogPostTime}}</small>
-                                {% if user.admin %} <small>(Admin)</small> {% endif %}
+                                <strong>{{blogPost.user.username}}</strong>{% if blogPost.user.admin %} <small>(Admin)</small> {% endif %} <small>{{blogPost.blogPostTime}}</small>
+
                                 <br>
                                 {{blogPost.content}}
                                 <br>

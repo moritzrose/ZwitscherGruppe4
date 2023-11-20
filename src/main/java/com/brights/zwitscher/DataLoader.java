@@ -37,7 +37,7 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(faresCode);
 
 
-        User randomProgrammer = new User("RandomProgrammer", "12345");
+        User randomProgrammer = new User("Moritz Rose", "12345");
         randomProgrammer.setProfilPicture("https://pm1.aminoapps.com/6636/ddaf1c402f3767d7c934aac8520aa12c023fd31c_00.jpg");
         userRepository.save(randomProgrammer);
 
