@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 @Entity
 public class Comment {
@@ -36,13 +37,13 @@ public class Comment {
 
 
     public String getCommentTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm - dd. MMMM yyyy", Locale.GERMAN);
 
         return commentTime.format(formatter);
     }
 
-    public void setCommentTime(int year, int month, int day, int hour, int minute, int second) {
-        this.commentTime = LocalDateTime.of(year, month, day, hour, minute, second);
+    public void setCommentTime(int year, int month, int day, int hour, int minute) {
+        this.commentTime = LocalDateTime.of(year, month, day, hour, minute);
     }
 
     public String getComment() {

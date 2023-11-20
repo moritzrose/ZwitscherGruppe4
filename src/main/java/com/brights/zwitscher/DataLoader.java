@@ -49,24 +49,27 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(admin);
 
         BlogPost post1 = new BlogPost("", "Meine ersten Erfahrungen auf Stack Overflow waren wie eine Reise in ein fremdes Land. Ich stellte eine Frage und wurde mit einer Flut von Antworten und weiteren Fragen konfrontiert. ","",randomProgrammer);
-        post1.setBlogPostTime ( 2023,11,11,22,12,12 );
+        post1.setBlogPostTime ( 2023,11,11,22,12);
+        post1.setImage ( "https://pm1.aminoapps.com/6636/ddaf1c402f3767d7c934aac8520aa12c023fd31c_00.jpg" );
+
+
 
         BlogPost post2 = new BlogPost("", "Einmal blickte ich auf meinen eigenen Code und fragte mich ernsthaft, wer ihn geschrieben hatte. Er schien so kompliziert und unverständlich, dass ich fast dachte, er sei von Außerirdischen verfasst worden.","",iDontHack);
-        post2.setBlogPostTime ( 2022,7,7,7,7,7);
+        post2.setBlogPostTime ( 2022,7,7,7,7);
 
         BlogPost post3 = new BlogPost("", "Fehlermeldungen in der Programmierung sind wie Hieroglyphen. Ich erinnere mich an eine besonders kryptische Meldung, die mir sagte, dass \"null nicht null sein kann\".","",codingCarl);
-        post3.setBlogPostTime ( 2021,8,8,8,8,8);
+        post3.setBlogPostTime ( 2021,8,8,8,8);
 
         BlogPost post4 = new BlogPost("", "Wenn ich Kommentare im Code schreibe, scheinen sie manchmal ein Eigenleben zu führen. Einmal schrieb ich \"Dieser Abschnitt ist selbsterklärend\", und kurz danach fragte mich ein Kollege, was ich damit gemeint hätte.","",larsgerhard);
-        post4.setBlogPostTime ( 2020,6,6,6,6,6);
+        post4.setBlogPostTime ( 2020,6,6,6,6);
 
         Comment comment1_1 = new Comment(codingCarl,"Ich fühle mit dir!");
         Comment comment1_2 = new Comment(larsgerhard,"Willkommen im Dschungel von Stack Overflow! \uD83D\uDE04 Es ist normal, am Anfang überwältigt zu sein, aber mit der Zeit wirst du dich immer besser zurechtfinden.");
         Comment comment1_3 = new Comment(iDontHack,"Denk daran, dass auch erfahrene Entwickler einmal Anfänger waren. Du bist nicht allein auf dieser Reise, und wir sind hier, um zu helfen!");
-        comment1_1.setCommentTime  ( 2023,11,11,22,12,50 );
+        comment1_1.setCommentTime  ( 2023,6,11,22,12);
 
         Comment comment2 = new Comment(codingCarl,"true Story...");
-        comment2.setCommentTime  ( 2021,7,8,7,7,7);
+        comment2.setCommentTime  ( 2021,7,8,7,7);
 
         post1.getComments().add(comment1_1);
         comment1_1.setBlogPost(post1);
