@@ -82,7 +82,9 @@ public class BlogPostService {
         String commentText =  newComment.getComment ();
         // Extract the image URL from the content text
         String image = extractImageUrl(commentText);
-        newComment.setImage ( image );
+        if ((!image.isEmpty ()) && (image != null)) {
+            newComment.setImage ( image );
+        }
         // Remove the image URL from the content text
         commentText = commentText.replace(image, "");
         newComment.setComment ( commentText );
