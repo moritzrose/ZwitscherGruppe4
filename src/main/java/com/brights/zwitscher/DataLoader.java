@@ -32,6 +32,12 @@ public class DataLoader implements ApplicationRunner {
         codingCarl.setProfilPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbTV5zDc6-zVWOeTGi6E4nyb6K5_ygUeTh0xOfNLA__5vmF5dSjFJJKSe1THwutIIsIAU&usqp=CAU");
         userRepository.save(codingCarl);
 
+        User faresCode= new User("FaresCod","123456");
+        faresCode.setProfilPicture("https://www.sciencebuddies.org/0Rlfgxiy3CWH7xqRyWf5xMg7d3Q=/700x368/-/https/www.sciencebuddies.org/cdn/Files/16563/5/stem-coding-projects.png");
+
+        userRepository.save(faresCode);
+
+
         User randomProgrammer = new User("RandomProgrammer","12345");
         randomProgrammer.setProfilPicture("https://pm1.aminoapps.com/6636/ddaf1c402f3767d7c934aac8520aa12c023fd31c_00.jpg");
         userRepository.save(randomProgrammer);
@@ -62,9 +68,14 @@ public class DataLoader implements ApplicationRunner {
         BlogPost post4 = new BlogPost("", "Wenn ich Kommentare im Code schreibe, scheinen sie manchmal ein Eigenleben zu führen. Einmal schrieb ich \"Dieser Abschnitt ist selbsterklärend\", und kurz danach fragte mich ein Kollege, was ich damit gemeint hätte.","",larsgerhard);
         post4.setBlogPostTime ( 2020,6,6,6,6);
 
+        BlogPost post5 = new BlogPost("", "Manchmal können die Fehlermeldungen lustig erscheinen, besonders wenn der Grund für den Fehler etwas Kleines wie ein vergessenes Komma oder eine Klammer ist.","",faresCode);
+        post4.setBlogPostTime ( 2023,7,9,3,6);
+
         Comment comment1_1 = new Comment(codingCarl,"Ich fühle mit dir!");
         Comment comment1_2 = new Comment(larsgerhard,"Willkommen im Dschungel von Stack Overflow! \uD83D\uDE04 Es ist normal, am Anfang überwältigt zu sein, aber mit der Zeit wirst du dich immer besser zurechtfinden.");
         Comment comment1_3 = new Comment(iDontHack,"Denk daran, dass auch erfahrene Entwickler einmal Anfänger waren. Du bist nicht allein auf dieser Reise, und wir sind hier, um zu helfen!");
+        Comment comment1_4 = new Comment(faresCode,"Da hast du recht😅😅😅😅");
+
         comment1_1.setCommentTime  ( 2023,6,11,22,12);
 
         Comment comment2 = new Comment(codingCarl,"true Story...");
@@ -76,6 +87,8 @@ public class DataLoader implements ApplicationRunner {
         comment1_2.setBlogPost(post1);
         post1.getComments().add(comment1_3);
         comment1_3.setBlogPost(post1);
+        post1.getComments().add(comment1_4);
+        comment1_4.setBlogPost(post1);
 
         post2.getComments().add(comment2);
         comment2.setBlogPost(post2);
@@ -84,5 +97,6 @@ public class DataLoader implements ApplicationRunner {
         blogPostRepository.save(post2);
         blogPostRepository.save(post3);
         blogPostRepository.save(post4);
+        blogPostRepository.save(post5);
     }
 }
