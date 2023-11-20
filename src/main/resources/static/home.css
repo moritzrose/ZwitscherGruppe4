@@ -21,7 +21,7 @@
 }
 
 .backgroundImage {
-    position: absolute;
+    position: fixed;
     top:200px;
     left:0;
     background-image: url("./images/background.png");
