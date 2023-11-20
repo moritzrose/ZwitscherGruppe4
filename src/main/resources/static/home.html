@@ -61,7 +61,7 @@
 
     {% for blogPost in blogPostList %}
 
-    <div class="container">
+    <div id="blogPostContainer{{blogPost.id}}" class="container">
         <div class="card">
             <div class="card-content">
                 <article class="media">
@@ -78,7 +78,9 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
-                                <small><a>Like</a> · <a>Edit</a> · <a hx-get="http://localhost:8080/post/{{blogPost.id}}/delete">Delete</a> </small>
+                                <small><a>Like</a> · <a>Edit</a> · <a hx-delete="http://localhost:8080/post/{{blogPost.id}}"
+                                hx-target="#blogPostContainer{{blogPost.id}}"
+                                hx-swap="delete">Delete</a> </small>
 
                                 {% if blogPost.image != "" %}
                                 <div class="bildImPost1">
@@ -86,8 +88,6 @@
                                 </div>
                                 <br>
                                 {% endif %}
-
-                                <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
                             </p>
                         </div>
 
@@ -267,7 +267,7 @@
                     <br>
                     {{comment}}
                     <br>
-                    <small><a>Like</a> · <a>Edit</a> · <a>Delete</a> </small>
+                    <small><a>Like</a> · {% if user.admin %}<a>Edit</a> · <a>Delete</a> {% endif %} </small>
                 </p>
             </div>
         </div>
