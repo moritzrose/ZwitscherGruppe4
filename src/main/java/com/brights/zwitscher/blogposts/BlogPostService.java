@@ -58,7 +58,7 @@ public class BlogPostService {
     }
 
     private String extractImageUrl(String text) {
-        String urlPattern = "(https?://\\S+\\.(jpg|jpeg|png|gif))";
+        String urlPattern = "(https?://\\S+\\.(jpg|jpeg|jfif|pjpeg|pjp|png|gif|apng|avif|svg|webp))";
         Pattern pattern = Pattern.compile(urlPattern, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
@@ -78,6 +78,16 @@ public class BlogPostService {
         }
         // Comment wants to know about the entry it belongs to
         newComment.setBlogPost(blogPostById);
+        // If Comment contains a picture URL, it's set up separately:
+        String commentText =  newComment.getComment ();
+        // Extract the image URL from the content text
+        String image = extractImageUrl(commentText);
+        newComment.setImage ( image );
+        // Remove the image URL from the content text
+        commentText = commentText.replace(image, "");
+        newComment.setComment ( commentText );
+
+
         // Blog post wants to know about the comment
         blogPostById.getComments().add(newComment);
         this.blogPostRepository.save(blogPostById);

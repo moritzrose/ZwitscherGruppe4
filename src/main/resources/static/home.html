@@ -112,6 +112,12 @@
                                         <small><a hx-delete="http://localhost:8080/posts/comment/{{comment.id}}"
                                                   hx-target="#comment{{comment.id}}"
                                                   hx-swap="delete">Kommentar löschen</a> </small>
+                                        {% if comment.image != "" %}
+                                        <div class="bildImPost1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image">
+                                        </div>
+                                        <br>
+                                        {% endif %}
                                     </p>
                                 </div>
                             </div>
@@ -183,6 +189,12 @@
                                 <br>
                                 {{blogPost.content}}
                                 <br>
+                                {% if blogPost.image != "" %}
+                                <div class="bildImPost1">
+                                    <img width="640" height="360" src="{{blogPost.image}}" alt="Blog Post Image">
+                                </div>
+                                <br>
+                                {% endif %}
                             </p>
                         </div>
 
@@ -204,6 +216,12 @@
                                         <br>
                                         {{comment.comment}}
                                         <br>
+                                        {% if comment.image != "" %}
+                                        <div class="bildImPost1">
+                                            <img width="640" height="360" src="{{comment.image}}" alt="Comment Image">
+                                        </div>
+                                        <br>
+                                        {% endif %}
                                     </p>
                                 </div>
                             </div>
@@ -267,6 +285,12 @@
                     <br>
                     {{comment}}
                     <br>
+                    {% if image != "" %}
+                    <div class="bildImPost1">
+                        <img width="640" height="360" src="{{image}}" alt="Comment Image">
+                    </div>
+                    <br>
+                    {% endif %}
                     <small>
                         {% if user.admin %}
                         <small>
@@ -333,12 +357,8 @@
             </header>
             <section class="modal-card-body">
                 <textarea class="textarea" id="postTextarea" name="blogContentText"
-                          placeholder="Schreibe einen neuen Post und füge die URL deines Bildes hier ein"></textarea>
+                          placeholder="Schreibe einen neuen Post und füge die URL deines unverschlüsselten Bildes hier ein"></textarea>
             </section>
-            <!--            <section class="modal-card-body">-->
-            <!--                <textarea class="textarea" id="postImageArea" name="imageUrl"-->
-            <!--                          placeholder="füge die Url deines Bildes hier ein"></textarea>-->
-            <!--            </section>-->
             <footer class="modal-card-foot">
                 <button class="button is-success" id="submitPostButton" type="submit">Bestätigen</button>
             </footer>
@@ -444,18 +464,6 @@
                 })
             }
         }, 300);
-        /*setTimeout(function () {
-            let backgroundImages = document.getElementsByClassName("backgroundImages")
-
-            for (let pic of backgroundImages){
-                let randomTop = Math.random() * window.innerHeight;
-                let randomLeft = Math.random() * window.innerWidth;
-
-                pic.style.top = randomTop + 'px';
-                pic.style.left = randomLeft + 'px';
-            }
-
-        }, 10);*/
     })
 </script>
 </html>
