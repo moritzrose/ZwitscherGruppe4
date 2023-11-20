@@ -51,6 +51,7 @@ public class DataLoader implements ApplicationRunner {
         // Create admin
         User admin= new User("admin","12345");
         admin.setAdmin(true);
+        admin.setProfilPicture("https://d2gg9evh47fn9z.cloudfront.net/1600px_COLOURBOX9896883.jpg");
         userRepository.save(admin);
 
         BlogPost post1 = new BlogPost("", "Meine ersten Erfahrungen auf Stack Overflow waren wie eine Reise in ein fremdes Land. Ich stellte eine Frage und wurde mit einer Flut von Antworten und weiteren Fragen konfrontiert. ","",randomProgrammer);
