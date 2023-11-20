@@ -29,7 +29,7 @@ public class BlogPost {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("commentTime")
     private List<Comment> comments  = new ArrayList<>();
 
