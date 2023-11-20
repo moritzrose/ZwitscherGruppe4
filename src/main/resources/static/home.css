@@ -1,17 +1,3 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.navbar {
-    display: flex;
-    background: #c890ee;
-}
-
-.navbarElement {
-    margin: 2rem 2rem;
-    text-decoration: none;
-    color: black;
-    border: none;
-    background: transparent;
+.bildImPost1 {
+    max-width: 20%;
 }
