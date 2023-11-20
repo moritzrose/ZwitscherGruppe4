@@ -83,9 +83,10 @@ public class DataLoader implements ApplicationRunner {
         post4.setBlogPostTime(2020, 6, 6, 6, 6);
 
         BlogPost post5 = new BlogPost("", "Manchmal können die Fehlermeldungen lustig erscheinen, besonders wenn der Grund für den Fehler etwas Kleines wie ein vergessenes Komma oder eine Klammer ist.", "https://media.tenor.com/LqrmT6OCeGcAAAAd/code.gif", faresCode);
-        post4.setBlogPostTime(2023, 1, 9, 3, 6);
+        post5.setBlogPostTime(2023, 1, 9, 3, 6);
 
         BlogPost post6 = new BlogPost("","Wenn ich anfange zu programmieren und die Musik im Hintergrund mich begleitet.","https://i.ibb.co/mbm6L7f/supermeme-11h50-12.png",compilerHero);
+        post6.setBlogPostTime(2021, 1, 9, 3, 6);
 
         BlogPost post7 = new BlogPost("","Wenn jemand sagt, Programmieren sei einfach und jeder könne es.","https://media.tenor.com/SinZyg9xCEEAAAAC/zoolander-surprise.gif",devGenius23);
         post7.setBlogPostTime(2022, 4, 6, 7, 6);
