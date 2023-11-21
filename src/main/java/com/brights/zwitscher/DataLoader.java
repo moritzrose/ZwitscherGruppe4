@@ -69,21 +69,21 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(admin);
 
         BlogPost post1 = new BlogPost("", "Meine ersten Erfahrungen auf Stack Overflow waren wie eine Reise in ein fremdes Land. Ich stellte eine Frage und wurde mit einer Flut von Antworten und weiteren Fragen konfrontiert. ", "", randomProgrammer);
-        post1.setBlogPostTime(2023, 11, 11, 22, 12);
+        post1.setBlogPostTime(2023, 11, 19, 22, 12);
         post1.setImage("https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/1920px-Stack_Overflow_logo.svg.png");
 
 
         BlogPost post2 = new BlogPost("", "Einmal blickte ich auf meinen eigenen Code und fragte mich ernsthaft, wer ihn geschrieben hatte. Er schien so kompliziert und unverständlich, dass ich fast dachte, er sei von Außerirdischen verfasst worden.", "", iDontHack);
-        post2.setBlogPostTime(2022, 7, 7, 7, 7);
+        post2.setBlogPostTime(2023, 11, 20, 19, 7);
 
         BlogPost post3 = new BlogPost("", "Fehlermeldungen in der Programmierung sind wie Hieroglyphen. Ich erinnere mich an eine besonders kryptische Meldung, die mir sagte, dass \"null nicht null sein kann\"", "https://i.ibb.co/51b9YbS/supermeme-13h17-3.png", codingCarl);
-        post3.setBlogPostTime(2021, 8, 8, 8, 8);
+        post3.setBlogPostTime(2023, 11, 21, 8, 8);
 
         BlogPost post4 = new BlogPost("", "Wenn ich Kommentare im Code schreibe, scheinen sie manchmal ein Eigenleben zu führen. Einmal schrieb ich \"Dieser Abschnitt ist selbsterklärend\", und kurz danach fragte mich ein Kollege, was ich damit gemeint hätte.", "", larsgerhard);
         post4.setBlogPostTime(2020, 6, 6, 6, 6);
 
         BlogPost post5 = new BlogPost("", "Manchmal können die Fehlermeldungen lustig erscheinen, besonders wenn der Grund für den Fehler etwas Kleines wie ein vergessenes Komma oder eine Klammer ist.", "https://media.tenor.com/LqrmT6OCeGcAAAAd/code.gif", faresCode);
-        post5.setBlogPostTime(2023, 1, 9, 3, 6);
+        post5.setBlogPostTime(2022, 1, 9, 3, 6);
 
         BlogPost post6 = new BlogPost("","Wenn ich anfange zu programmieren und die Musik im Hintergrund mich begleitet.","https://i.ibb.co/mbm6L7f/supermeme-11h50-12.png",compilerHero);
         post6.setBlogPostTime(2021, 1, 9, 3, 6);
@@ -96,12 +96,14 @@ public class DataLoader implements ApplicationRunner {
         Comment comment1_3 = new Comment(iDontHack, "Denk daran, dass auch erfahrene Entwickler einmal Anfänger waren. Du bist nicht allein auf dieser Reise, und wir sind hier, um zu helfen!");
         Comment comment1_4 = new Comment(faresCode, "Da hast du recht😅😅😅😅");
 
-        comment1_1.setCommentTime(2023, 6, 11, 22, 12);
-
+        comment1_1.setCommentTime(2023, 11, 20, 22, 12);
+        comment1_2.setCommentTime(2023,11,20,23,30);
+        comment1_3.setCommentTime(2023,11,21,7,30);
         Comment comment2 = new Comment(codingCarl, "true Story...");
-        comment2.setCommentTime(2021, 7, 8, 7, 7);
+        comment2.setCommentTime(2023, 11, 21, 8, 10);
 
         Comment comment7_1 = new Comment(compilerHero,"🤣🤣🤣🤣🤣🤣🤣");
+        comment7_1.setCommentTime(2022,4,10,10,13);
 
         // Kommentäre auf die Posts
 
