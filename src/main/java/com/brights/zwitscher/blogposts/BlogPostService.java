@@ -69,16 +69,16 @@ public class BlogPostService {
     }
 
     public Comment updateBlogPostWithComment(Long blogId, User user, CommentRequestDTO comment) {
-        // Check if post with provided id exists
+        // Überprüfen Sie, ob der Beitrag mit der angegebenen ID vorhanden ist
         BlogPost blogPostById = getBlogPostById(blogId);
         Comment newComment = new Comment(user, comment.getComment());
 
         if (blogPostById == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id " + blogId + " not found");
         }
-        // Comment wants to know about the entry it belongs to
+        // Der Kommentar möchte wissen, zu welchem Eintrag er gehört
         newComment.setBlogPost(blogPostById);
-        // If Comment contains a picture URL, it's set up separately:
+        // Wenn Kommentar eine Bild-URL enthält, wird diese separat eingerichtet:
         String commentText =  newComment.getComment ();
         // Extract the image URL from the content text
         String image = extractImageUrl(commentText);
